@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "esg_curation": {
+      "type": "esg-curation",
+      "settings": {}
+    }
+  },
+  "order": [
+    "esg_curation"
+  ]
+}

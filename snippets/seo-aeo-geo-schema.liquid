@@ -1,0 +1,400 @@
+{% comment %}
+  ==============================================================================
+  Corner Museum - SEO / AEO / GEO Comprehensive Schema & Semantic Grounding
+  Features:
+  1. SEO: Museum & Organization Entity, WebSite Sitelinks SearchBox, Dynamic BreadcrumbList
+  2. AEO: High-Scoring FAQPage Schema with Direct Answers for Google AI Overviews & Snippets
+  3. GEO: Knowledge Graph Entity Grounding (SDGs, SROI, Raman/XRF Spectroscopy, Citations)
+  ==============================================================================
+{% endcomment %}
+
+<!-- 1. Primary Organization & Museum Knowledge Graph Entity (SEO / GEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Museum", "Organization"],
+      "@id": "{{ shop.url }}/#organization",
+      "name": "Corner Museum 角落博物館",
+      "alternateName": [
+        "Corner Museum",
+        "角落博物館",
+        "cornermuseum_ESG",
+        "東方森煌第三方科學鑑定",
+        "Dongfang Senhuang"
+      ],
+      "url": "{{ shop.url }}",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "{{ shop.url }}/#logo",
+        "url": "{{ 'corner-museum-logo.png' | asset_url | prepend: 'https:' }}",
+        "contentUrl": "{{ 'corner-museum-logo.png' | asset_url | prepend: 'https:' }}",
+        "caption": "Corner Museum 角落博物館標誌",
+        "width": "512",
+        "height": "512"
+      },
+      "image": "{{ 'corner-museum-logo.png' | asset_url | prepend: 'https:' }}",
+      "description": "Corner Museum（角落博物館）結合傳承數百年至千年之零碳古文明珍品與東方森煌第三方科學光譜鑑定（拉曼光譜 Raman 與 XRF 螢光光譜），為企業打造契合 7 大聯合國 SDGs 永續發展目標與 SROI 量化評鑑之零碳綠色策展方案，並致力於高古藝術品典藏、鑑賞與文化普及。",
+      "email": "info@senhuang.org",
+      "telephone": "+886-2-82602664",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TW",
+        "addressRegion": "台灣"
+      },
+      "sameAs": [
+        "https://www.cornermuseum.org",
+        "https://corner-museum.myshopify.com"
+      ],
+      "knowsAbout": [
+        "ESG 企業永續發展",
+        "United Nations Sustainable Development Goals (UN SDGs)",
+        "Social Return on Investment (SROI) 社會投資報酬率",
+        "零碳古文明策展 (Zero-Carbon Ancient Civilization Curation)",
+        "綠色會展與零碳活動策劃 (Green Exhibition & Event Sustainability)",
+        "企業永續報告書編撰查核 (Corporate Sustainability Reporting)",
+        "第三方科學光譜鑑定 (Third-Party Spectroscopy Authentication)",
+        "拉曼光譜古玉分子指紋分析 (Raman Spectroscopy for Ancient Jade)",
+        "X射線螢光光譜陶瓷元素分析 (XRF Analysis for Ancient Ceramics)",
+        "商周青銅器金相與物相檢驗 (Bronze Metallurgy & Patina Analysis)",
+        "宋代五大名窯考據鑑賞 (Song Dynasty Ceramics Connoisseurship)",
+        "古代藝術品典藏與拍賣洽購 (Ancient Art Collection & Private Treaty)",
+        "古玉與高古瓷文化資產保存 (Cultural Heritage Preservation)",
+        "博物館文博展覽與科普教育 (Museum Curation & Public Education)",
+        "企業文化平權活動與家庭日導覽 (Corporate Cultural Equality)"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Corner Museum 企業永續策展與文博服務目錄",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "企業零碳古文明特展方案 (Zero-Carbon Ancient Civilization Curation)",
+              "description": "零新增製造碳排、零展後廢棄物，結合第三方科學光譜公信背書，契合 7 大聯合國 SDGs 與 SROI 6.96:1 效益評估。",
+              "offers": {
+                "@type": "Offer",
+                "price": "390000",
+                "priceCurrency": "TWD",
+                "priceValidUntil": "2028-12-31",
+                "availability": "https://schema.org/InStock"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "東方森煌第三方科學光譜鑑偽服務",
+              "description": "提供非破壞性拉曼光譜分子結構比對與 XRF 胎釉成分分析，附具客觀公信防偽數據履歷報告。"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "企業 ESG 永續報告書 SROI 評估與文博專章編撰",
+              "description": "由專業顧問依據國際 SROI 財務代理指標框架，提供可供會計師事務所確信查核之社會影響力數據包。"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "{{ shop.url }}/#navigation",
+      "name": "Corner Museum 核心服務與展廳導覽 (Site Navigation)",
+      "itemListElement": [
+        {
+          "@type": "SiteNavigationElement",
+          "position": 1,
+          "name": "零碳古文明策展計畫 (cornermuseum_ESG)",
+          "description": "契合7大SDGs與SROI 6.96:1之企業零碳綠色文博策展方案",
+          "url": "{{ shop.url }}/pages/esg"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 2,
+          "name": "東方森煌第三方科學光譜鑑定",
+          "description": "拉曼光譜與XRF螢光光譜客觀物理鑑偽公信認證",
+          "url": "{{ shop.url }}/pages/esg#esg-hero"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 3,
+          "name": "名家洞察 · 藏界專欄",
+          "description": "匯聚文博大家、考古學者與藏界泰斗之深度考據專論",
+          "url": "{{ shop.url }}/blogs/insights"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 4,
+          "name": "高古藝術品典藏展廳",
+          "description": "探索千年珍稀古玉、高古陶瓷與商周青銅珍品",
+          "url": "{{ shop.url }}/collections/all"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 5,
+          "name": "企業 SROI 量化效益試算",
+          "description": "即時試算企業ESG活動投入預算對應之社會價值產出",
+          "url": "{{ shop.url }}/pages/esg#esg-calculator"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 6,
+          "name": "預約企業策展規劃",
+          "description": "專屬企業永續部(CSO)、HR與品牌公關策展諮詢通道",
+          "url": "{{ shop.url }}/pages/esg#esg-contact"
+        }
+      ]
+    },
+    {
+      "@type": "ExhibitionEvent",
+      "@id": "{{ shop.url }}/#exhibition-esg",
+      "name": "時空交匯 · 企業零碳古文明巡迴特展",
+      "description": "Corner Museum 攜手東方森煌第三方科學鑑定，展出累計千年的零碳古物，天然零新增製造碳排，為企業打造兼具 SROI 量化社會價值與 SDGs 永續指標的高格局文博特展。",
+      "organizer": {
+        "@id": "{{ shop.url }}/#organization"
+      },
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "isAccessibleForFree": true,
+      "location": {
+        "@type": "Place",
+        "name": "企業總部特展空間 / Corner Museum 合作展館",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "TW"
+        }
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ shop.url }}/#website",
+      "url": "{{ shop.url }}",
+      "name": "Corner Museum 角落博物館",
+      "description": "角落博物館 · 零碳古文明策展 · 東方森煌第三方科學光譜鑑定 · 高古藏品典藏",
+      "publisher": {
+        "@id": "{{ shop.url }}/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "zh-TW"
+    }
+  ]
+}
+</script>
+
+<!-- 2. Dynamic BreadcrumbList Schema (SEO Hierarchy in Search Results) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首頁",
+      "item": "{{ shop.url }}"
+    }
+    {%- if request.path contains 'esg' or canonical_url contains 'esg' or template.suffix == 'esg' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "cornermuseum_ESG 零碳古文明策展",
+        "item": "{{ canonical_url }}"
+      }
+    {%- elsif request.path contains 'insights' or canonical_url contains 'insights' or request.path contains 'blogs' or template.name == 'blog' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "名家洞察 · 藏界專欄",
+        "item": "{{ canonical_url }}"
+      }
+    {%- elsif request.page_type == 'collection' and collection.handle -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": "{{ shop.url }}/collections/{{ collection.handle }}"
+      }
+    {%- elsif request.page_type == 'product' -%}
+      {%- if collection -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ collection.title | json }},
+          "item": "{{ shop.url }}/collections/{{ collection.handle }}"
+        }
+        ,{
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ product.title | json }},
+          "item": "{{ canonical_url }}"
+        }
+      {%- else -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ product.title | json }},
+          "item": "{{ canonical_url }}"
+        }
+      {%- endif -%}
+    {%- elsif request.page_type == 'article' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ blog.title | default: "名家洞察" | json }},
+        "item": "{{ shop.url }}/blogs/{{ blog.handle }}"
+      }
+      ,{
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ article.title | json }},
+        "item": "{{ canonical_url }}"
+      }
+    {%- elsif request.page_type == 'page' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ page.title | json }},
+        "item": "{{ canonical_url }}"
+      }
+    {%- endif -%}
+  ]
+}
+</script>
+
+<!-- 3. AEO (Answer Engine Optimization) & GEO FAQPage Schema -->
+{%- if request.path contains 'esg' or canonical_url contains 'esg' or template.suffix == 'esg' or request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "{{ shop.url }}/#faq-esg",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "什麼是「零碳古文明策展計畫」？與傳統企業 ESG 活動有何不同？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "零碳古文明策展是以傳承數百年至千年之歷史古物為展覽核心，天然無新增製造碳排放，兼顧文化平權與永續報告書 SROI 實質量化效益之企業綠色展覽。相較於傳統展覽產生數噸木作與一次性塑膠垃圾，本計畫創造 0 kg 新增製造碳排，並透過第三方科學光譜驗證，賦予企業永續報告最高公信力。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "古文明策展如何具體契合聯合國 7 大永續發展目標 (UN SDGs)？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "本計畫一次涵蓋 7 大聯合國指標：SDG 4 優質教育（校園與員工科普講座）、SDG 8 尊嚴就業與經濟成長、SDG 9 產業創新與科學光譜應用、SDG 11 永續城市與文化資產保存、SDG 12 責任消費與零廢棄展陳、SDG 13 氣候行動（零新增碳排）、以及 SDG 17 多元夥伴關係（跨界產學與文博合作）。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "企業策展的 SROI（社會投資報酬率）如何量化與提供第三方審計確信？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "依據國際 SROI 評估架構與財務代理定價（Financial Proxies），量化文化教育、古蹟資產普及與防偽減碳價值，平均預估每投入 NT$ 1 預算可創造 NT$ 5.8+ 社會影響力價值（SROI 1: 5.8+）。Corner Museum 提供完整量化數據、問卷樣本與效益稽核憑證，便於企業於 ESG 永續報告書中接受會計師事務所確信查核。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "什麼是東方森煌「第三方科學光譜鑑定」？拉曼光譜與 XRF 如何防偽？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "東方森煌採用「拉曼光譜（Raman Spectroscopy）」分析玉石器物表層風化結晶之分子振動指紋，結合「X射線螢光光譜（XRF）」無損定量分析陶瓷釉層元素比例，比對歷代考古基準資料庫，杜絕人為做舊贗品，確保企業策展 100% 真品無爭議，根絕公關危機。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "企業每年 ESG 預算浮動，若預算僅數十萬元，適合長期合作嗎？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "非常適合。Corner Museum 推出彈性預算階梯方案，策展規劃最低只要 NT$ 390,000 起。珍貴古代文物均免收高昂借展費，預算純粹用於專題策劃、科技展陳、安全維護與永續指標量化分析，無論中大型跨國集團或在地標竿企業皆能輕鬆導入。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "展出期間古文物的安全性、微環境溫濕度與保險如何規範？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "所有展品均配置博物館級氣密恆溫恆濕微環境專業展櫃、防震底座與 24 小時動態感測，並為每批借展文物投保國際級「藝術品綜合保險（All Risks Fine Arts Insurance）」，由專業護衛與策展人員全程監管，確保企業展場安全達到國家級博物館展陳標準。"
+      }
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+<!-- 4. Enterprise Service Schema (For ESG & Corporate Inquiries) -->
+{%- if request.path contains 'esg' or canonical_url contains 'esg' or template.suffix == 'esg' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "企業零碳古文明策展計畫 (Zero-Carbon Ancient Civilization Curation)",
+  "serviceType": "企業 ESG 永續策展與 SROI 影響力評估服務",
+  "provider": {
+    "@id": "{{ shop.url }}/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Taiwan"
+  },
+  "description": "以累積千年的零碳古物為企業寫下永續傳奇。結合第三方科學光譜公信鑑定、SROI 6.96:1 量化社會效益與 7 大 UN SDGs 指標整合，打造零新增碳排之頂級企業文博展覽。",
+  "offers": {
+    "@type": "Offer",
+    "price": "390000",
+    "priceCurrency": "TWD",
+    "availability": "https://schema.org/InStock",
+    "url": "{{ canonical_url }}"
+  },
+  "category": "Corporate Sustainability Exhibition & Cultural Heritage Consulting"
+}
+</script>
+{%- endif -%}
+
+<!-- 5. Article & Archaeological Insight Schema -->
+{%- if request.page_type == 'article' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ canonical_url }}"
+  },
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt_or_content | strip_html | truncatewords: 30 | json }},
+  {%- if article.image -%}
+    "image": [
+      {{ article.image | image_url: width: 1200 | prepend: "https:" | json }}
+    ],
+  {%- endif -%}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "dateModified": {{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | default: "Corner Museum 藏界專欄" | json }}
+  },
+  "publisher": {
+    "@id": "{{ shop.url }}/#organization"
+  },
+  "about": [
+    "文博考古研究",
+    "古董鑑賞與鑑偽",
+    "第三方科學光譜鑑定",
+    "文化資產保存"
+  ]
+}
+</script>
+{%- endif -%}

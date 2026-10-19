@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {}
+    },
+    "esg_curation": {
+      "type": "esg-curation",
+      "settings": {}
+    },
+    "main_blog": {
+      "type": "main-blog",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "esg_curation",
+    "main_blog"
+  ]
+}

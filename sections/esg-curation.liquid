@@ -1,0 +1,1485 @@
+{{ 'esg-curation.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'three.min.js' | asset_url }}"></script>
+<script src="{{ 'esg-curation.js' | asset_url }}" defer="defer"></script>
+
+<!-- ==========================================================================
+     0. NeoLeaf Style Wave Liquid Loader Portal (約 3 秒)
+     ========================================================================== -->
+<div id="esg-loader-portal" class="esg-loader-portal">
+  <div class="esg-neoleaf-loader-box">
+    <div class="esg-wave-canvas-wrap">
+      <canvas id="esg-neoleaf-wave-canvas"></canvas>
+    </div>
+    <div class="esg-neoleaf-sub">
+      loading... <span id="esg-neoleaf-counter">0</span> %
+    </div>
+  </div>
+</div>
+
+<div class="esg-page">
+  <!-- 3D Cosmic Background Starfield Canvas -->
+  <div id="esg-webgl-canvas" class="esg-webgl-canvas"></div>
+
+  <!-- ==========================================================================
+       1. HERO: 時空交匯 · 零碳古文明策展 & 3D 互動展示台
+       ========================================================================== -->
+  <section class="esg-hero">
+    <div class="esg-container">
+      <div class="esg-hero__grid">
+        <div class="esg-hero__content">
+          <div class="esg-badge esg-badge-gold">
+            <span class="morphicon morphicon-gold" style="width: 18px; height: 18px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 3l9 7H3l9-7z"/>
+              </svg>
+            </span>
+            <span>Corner Museum × 東方森煌第三方科學鑑定</span>
+          </div>
+
+          <h1 class="esg-hero__title esg-serif">
+            用累計千年的零碳古物<br>
+            為企業寫下永續傳奇
+          </h1>
+
+          <p class="esg-hero__subtitle">
+            零碳古文明策展計畫 · Zero-Carbon Ancient Civilization Curation
+          </p>
+
+          <p class="esg-hero__desc">
+            突破傳統 ESG 活動的邊際疲勞。以傳承數百年至數千年的古文明資產，結合第三方光譜科技檢驗，
+            打造<strong>「免添購高價資產、零新增碳排、打擊贗品、提升 SROI 評鑑」</strong>的高格局企業永續策展方案。
+            一場展覽，最高契合 <strong>7 大聯合國永續發展目標 (UN SDGs)</strong>！
+          </p>
+
+          <div class="esg-hero__actions">
+            <a href="#esg-contact" class="esg-btn esg-btn-primary">
+              <span>立即預約策展方案</span>
+              <span class="morphicon" style="width: 18px; height: 18px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+            <a href="#esg-calculator" class="esg-btn esg-btn-outline">
+              <span>試算 SROI 效益</span>
+            </a>
+            <a href="#esg-industries" class="esg-btn esg-btn-outline">
+              <span>五大產業跨界扣連</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Dedicated Corner Museum & ESG Dynamic Interactive Logo Stage -->
+        <div class="esg-hero__visual">
+          <div class="esg-brand-stage-box" id="esg-brand-stage-box">
+            <!-- Top HUD -->
+            <div class="esg-brand-hud-top">
+              <span class="esg-brand-hud-pill">
+                <span class="morphicon morphicon-gold anim-pulse" style="width: 10px; height: 10px; margin-right: 6px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                </span>
+                CORNER MUSEUM
+              </span>
+              <span class="esg-brand-hud-cross">×</span>
+              <span class="esg-brand-hud-pill esg-brand-hud-pill--emerald">
+                <span class="morphicon morphicon-emerald anim-pulse" style="width: 10px; height: 10px; margin-right: 6px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                </span>
+                ZERO-CARBON ESG
+              </span>
+            </div>
+
+            <!-- Dynamic 3D Perspective Card Container -->
+            <div id="esg-brand-card" class="esg-brand-card">
+              <!-- Ambient Stardust Particle & Orbit Canvas -->
+              <canvas id="esg-brand-canvas" class="esg-brand-canvas"></canvas>
+
+              <!-- Dynamic Dual Logo Display -->
+              <div class="esg-brand-duo-wrap">
+                <!-- 1. Corner Museum Official Emblem -->
+                <div class="esg-brand-unit esg-brand-unit--museum">
+                  <div class="esg-brand-medallion esg-brand-medallion--gold">
+                    <div class="esg-medallion-halo"></div>
+                    <div class="esg-medallion-shimmer"></div>
+                    <img 
+                      src="{{ 'corner-museum-logo.png' | asset_url }}" 
+                      alt="Corner Museum 角落博物館" 
+                      class="esg-brand-logo-img"
+                      width="160"
+                      height="190"
+                      loading="eager"
+                    >
+                  </div>
+                  <div class="esg-brand-badge-label">
+                    <span class="esg-badge-label-main">Corner Museum</span>
+                    <span class="esg-badge-label-sub">東方森煌科學公信</span>
+                  </div>
+                </div>
+
+                <!-- Energy Convergence Connector -->
+                <div class="esg-brand-connector">
+                  <div class="esg-connector-pulse"></div>
+                  <div class="esg-connector-symbol">×</div>
+                  <div class="esg-connector-subtext">英雄相惜</div>
+                </div>
+
+                <!-- 2. ESG Dynamic Monogram & Orbiting Pillars -->
+                <div class="esg-brand-unit esg-brand-unit--esg">
+                  <div class="esg-brand-medallion esg-brand-medallion--emerald">
+                    <div class="esg-esg-halo"></div>
+                    <div class="esg-esg-orbit-ring">
+                      <span class="esg-orbit-pill dot-e" title="Environmental 零新增碳排">E</span>
+                      <span class="esg-orbit-pill dot-s" title="Social SROI文化平權">S</span>
+                      <span class="esg-orbit-pill dot-g" title="Governance 第三方科學公信">G</span>
+                    </div>
+                    <div class="esg-esg-emblem-core">
+                      <div class="esg-esg-logo-svg-wrap">
+                        <svg viewBox="0 0 100 100" class="esg-esg-svg-icon">
+                          <defs>
+                            <linearGradient id="esgCoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stop-color="#34d399"/>
+                              <stop offset="50%" stop-color="#10b981"/>
+                              <stop offset="100%" stop-color="#059669"/>
+                            </linearGradient>
+                            <linearGradient id="esgGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stop-color="#fdf2d0"/>
+                              <stop offset="50%" stop-color="#c5a059"/>
+                              <stop offset="100%" stop-color="#8c6e33"/>
+                            </linearGradient>
+                          </defs>
+                          <!-- Radiant Crest Shape -->
+                          <path d="M50 8 C68 24 88 42 88 64 C88 82 71 92 50 92 C29 92 12 82 12 64 C12 42 32 24 50 8 Z" fill="rgba(16, 185, 129, 0.12)" stroke="url(#esgCoreGrad)" stroke-width="2.5"/>
+                          <!-- Inner Sprout / Infinity Leaf Branch -->
+                          <path d="M50 24 C50 24 64 36 64 52 C64 62 56 68 50 68 C44 68 36 62 36 52 C36 36 50 24 50 24 Z" fill="url(#esgCoreGrad)" opacity="0.85"/>
+                          <path d="M50 78 L50 42 M50 56 C56 50 62 52 62 52 M50 62 C44 56 38 58 38 58" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/>
+                        </svg>
+                      </div>
+                      <div class="esg-esg-text-mark">ESG</div>
+                    </div>
+                  </div>
+                  <div class="esg-brand-badge-label">
+                    <span class="esg-badge-label-main esg-badge-label-main--emerald">零碳古文明策展</span>
+                    <span class="esg-badge-label-sub">契合 7 大 UN SDGs</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Indicator Row -->
+              <div class="esg-brand-live-row">
+                <span class="esg-brand-live-pill">
+                  <span class="esg-dot esg-dot-gold"></span>
+                  累計千年零碳文物
+                </span>
+                <span class="esg-brand-live-pill">
+                  <span class="esg-dot esg-dot-emerald"></span>
+                  SROI 量化社會價值
+                </span>
+                <span class="esg-brand-live-pill">
+                  <span class="esg-dot esg-dot-gold"></span>
+                  100% 科學光譜防偽
+                </span>
+              </div>
+            </div>
+
+            <!-- Bottom HUD -->
+            <div class="esg-brand-hud-bottom">
+              <div class="esg-brand-hint">
+                <span class="morphicon morphicon-gold" style="width: 15px; height: 15px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 8v8M8 12h8"/>
+                  </svg>
+                </span>
+                移動滑鼠 · 探索雙品牌動態共生光場
+              </div>
+              <div id="esg-brand-telemetry" class="esg-brand-telemetry">HERITAGE × SUSTAINABILITY</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Key Stat Odometer Cards -->
+      <div class="esg-stats-grid">
+        <div class="esg-stat-card">
+          <div class="esg-stat-number" style="color: var(--esg-emerald-light);">0 kg</div>
+          <div class="esg-stat-label">古物新增碳排</div>
+          <div class="esg-stat-desc">完勝裝置藝術或新創藝術</div>
+        </div>
+        <div class="esg-stat-card">
+          <div class="esg-stat-number">85%</div>
+          <div class="esg-stat-label">可視覺與數據化產出</div>
+          <div class="esg-stat-desc">-策展成果多數得以畫面及數據化</div>
+        </div>
+        <div class="esg-stat-card">
+          <div class="esg-stat-number">7項</div>
+          <div class="esg-stat-label">聯合國SDGS指標</div>
+          <div class="esg-stat-desc">-一次觸及教育、文化、減碳與健全制度</div>
+        </div>
+        <div class="esg-stat-card">
+          <div class="esg-stat-number" style="color: #c5a059; font-size: clamp(1.8rem, 2.3vw, 2.6rem); letter-spacing: -0.02em;">1: 5.8+ SROI</div>
+          <div class="esg-stat-label">社會投資報酬率，多數高於5.8以上</div>
+          <div class="esg-stat-desc">-多重效益累加，效益高於一般活動</div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           1.5 Enterprise Lobby Curation Showcase (方案 A：企業總部實境策展展示視窗)
+           融入深空琉金 HUD 取景框、科技定位角碼、動態光流、熱點探索與 3D 視差
+           ====================================================================== -->
+      <div class="esg-showcase-wrap" id="esg-showcase-wrap">
+        <div class="esg-showcase-ambient-halo"></div>
+
+        <div class="esg-showcase-card" id="esg-showcase-card">
+          <!-- 4 Cyber-Museum Corner Reticles (科技文博四角定位瞄準碼) -->
+          <div class="esg-reticle reticle-tl"></div>
+          <div class="esg-reticle reticle-tr"></div>
+          <div class="esg-reticle reticle-bl"></div>
+          <div class="esg-reticle reticle-br"></div>
+
+          <!-- Top HUD Status Bar -->
+          <div class="esg-showcase-hud-top">
+            <div class="esg-showcase-pill-left">
+              <span class="esg-radar-dot"></span>
+              <span class="esg-hud-status-text">ARCHITECTURAL PREVIEW · 企業總部實境情境</span>
+            </div>
+            <div class="esg-showcase-hud-center">
+              <span class="esg-showcase-tagline">CORNER MUSEUM × 企業永續傳奇</span>
+            </div>
+            <div class="esg-showcase-pill-right">
+              <span class="esg-pill-sub">0 kg CO₂</span>
+              <span class="esg-pill-divider">·</span>
+              <span class="esg-pill-sub">7 SDGs</span>
+              <span class="esg-pill-divider">·</span>
+              <span class="esg-pill-sub esg-gold-text">SROI 1: 5.8+</span>
+            </div>
+          </div>
+
+          <!-- Visual Canvas Stage with Interactive Image -->
+          <div class="esg-showcase-viewport">
+            <img
+              src="{{ 'esg-popup-ad.jpg' | asset_url }}"
+              alt="Corner Museum 零碳古文明策展 - 企業總部大廳實境展示"
+              class="esg-showcase-img"
+              id="esg-showcase-img"
+              loading="eager"
+              width="1200"
+              height="397"
+            >
+
+            <!-- Holographic Light Sheen & Scanlines -->
+            <div class="esg-showcase-scanlines"></div>
+            <div class="esg-showcase-shimmer"></div>
+
+            <!-- Hotspot 1: Left Showcase (XRF 科學光譜履歷) -->
+            <div class="esg-hotspot hotspot-xrf" style="left: 45.8%; top: 46%;">
+              <div class="esg-hotspot-pin" tabindex="0" role="button" aria-label="SDG 9 東方森煌 XRF 光譜履歷">
+                <span class="esg-pin-pulse"></span>
+                <span class="esg-pin-core">
+                  <span class="esg-pin-dot"></span>
+                </span>
+              </div>
+              <div class="esg-hotspot-tooltip">
+                <div class="esg-tooltip-header">
+                  <span class="esg-tooltip-badge esg-badge--emerald">SDG 9 · 科技研發</span>
+                  <strong>東方森煌 XRF 光譜履歷</strong>
+                </div>
+                <p class="esg-tooltip-desc">
+                  拉曼光譜與無機元素定量分析，古物具備 100% 客觀科學履歷，徹底杜絕贗品爭議。
+                </p>
+              </div>
+            </div>
+
+            <!-- Hotspot 2: Right Showcase (微氣候恆溫恆濕展櫃) -->
+            <div class="esg-hotspot hotspot-climate" style="left: 58.2%; top: 46%;">
+              <div class="esg-hotspot-pin" tabindex="0" role="button" aria-label="SDG 11 博物館級氣候微環境">
+                <span class="esg-pin-pulse"></span>
+                <span class="esg-pin-core">
+                  <span class="esg-pin-dot"></span>
+                </span>
+              </div>
+              <div class="esg-hotspot-tooltip">
+                <div class="esg-tooltip-header">
+                  <span class="esg-tooltip-badge esg-badge--emerald">SDG 11 · 文化資產</span>
+                  <strong>博物館級微氣候展櫃</strong>
+                </div>
+                <p class="esg-tooltip-desc">
+                  氣密恆溫恆濕展櫃（RH 45%~55%），高額古物免買斷借展，企業零負擔進駐大廳。
+                </p>
+              </div>
+            </div>
+
+            <!-- Hotspot 3: Executive Dialogue (英雄相惜 永續對話) -->
+            <div class="esg-hotspot hotspot-dialogue" style="left: 64.6%; top: 38.5%;">
+              <div class="esg-hotspot-pin" tabindex="0" role="button" aria-label="SDG 17 英雄相惜跨界對話">
+                <span class="esg-pin-pulse"></span>
+                <span class="esg-pin-core">
+                  <span class="esg-pin-dot"></span>
+                </span>
+              </div>
+              <div class="esg-hotspot-tooltip">
+                <div class="esg-tooltip-header">
+                  <span class="esg-tooltip-badge esg-badge--gold">SDG 17 · 夥伴關係</span>
+                  <strong>英雄相惜 · 永續對話</strong>
+                </div>
+                <p class="esg-tooltip-desc">
+                  以千年古文明為載體，為企業量身打造高格局 SROI 社會投資回報，補齊文化永續指標。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom HUD Footer -->
+          <div class="esg-showcase-hud-bottom">
+            <div class="esg-showcase-caption">
+              <span class="esg-caption-star">✦</span>
+              <span class="esg-caption-text">
+                用累計千年的零碳文物，幫你寫下英雄相惜的永續故事
+              </span>
+            </div>
+            <div class="esg-showcase-hint">
+              <span class="esg-hint-pulse"></span>
+              <span>懸停或點選探索互動熱點 · Hover to explore</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Continuous Infinite Ticker (Corner Museum 品牌 LOGO 循環播放動畫)
+       ========================================================================== -->
+  <div class="esg-ticker-wrap">
+    <div class="esg-ticker-track">
+      <div class="esg-ticker-item">
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+      </div>
+      <div class="esg-ticker-item">
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+        <div class="esg-ticker-brand-badge">
+          <img src="{{ 'corner-museum-logo.png' | asset_url }}" alt="Corner Museum 角落博物館" class="esg-ticker-logo-img" width="160" height="42" loading="eager">
+          <span class="esg-ticker-brand-name">CORNER MUSEUM</span>
+          <span class="esg-ticker-brand-sub">角落博物館</span>
+          <span class="esg-ticker-pill">零碳 ESG 策展</span>
+        </div>
+        <span class="esg-ticker-star">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       2. 痛點對比: 為什麼企業需要『零碳古文明策展』？
+       ========================================================================== -->
+  <section class="esg-section" id="esg-why">
+    <div class="esg-container">
+      <div class="esg-section__header">
+        <div class="esg-badge">Corporate Dilemma & Solution</div>
+        <h2 class="esg-section__title esg-serif">
+          為什麼 ESG 企業需要『零碳古文明策展』計畫？
+        </h2>
+        <p class="esg-section__subtitle">
+          企業是否投入了龐大 ESG 預算，但總有幾個指標難以突破？
+          每次號召同事去淨灘、志工活動，人人面露難色？該如何輕鬆拿下公益、藝文與教育的高分？
+        </p>
+      </div>
+
+      <div class="esg-compare-grid">
+        <!-- 傳統困境 -->
+        <div class="esg-card esg-card--problem">
+          <h3 class="esg-card__title" style="color: #f87171;">
+            <span class="morphicon morphicon-red anim-pulse" style="width: 24px; height: 24px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+              </svg>
+            </span>
+            <span>傳統 ESG 執行之邊際困境</span>
+          </h3>
+          <ul class="esg-list">
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-red esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/>
+                </svg>
+              </span>
+              <span><strong>單純捐款 SROI 分數低：</strong>花費 100 萬捐款給公益單位，在永續評比的分數遠低於企業自主投入相關推動。</span>
+            </li>
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-red esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/>
+                </svg>
+              </span>
+              <span><strong>同仁參與意願低落：</strong>每逢志工日、烈日淨灘活動，員工參與常流於形式，難以凝聚企業榮譽感。</span>
+            </li>
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-red esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/>
+                </svg>
+              </span>
+              <span><strong>製造額外展覽碳排：</strong>傳統大型裝置藝術與全新製作的展場道具，策展結束即成廢棄物，產生新碳排。</span>
+            </li>
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-red esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/>
+                </svg>
+              </span>
+              <span><strong>與本業文化嚴重脫鉤：</strong>製造業、科技業舉辦一般文藝活動，往往難以說出令人共鳴的品牌精神。</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 零碳策展新解方 -->
+        <div class="esg-card esg-card--solution">
+          <h3 class="esg-card__title" style="color: var(--esg-emerald-light);">
+            <span class="morphicon morphicon-emerald anim-pulse" style="width: 24px; height: 24px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </span>
+            <span>角落博物館：零碳策展四大突破</span>
+          </h3>
+          <ul class="esg-list">
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-emerald esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>
+                </svg>
+              </span>
+              <span><strong>百年文物天生零碳排：</strong>展品皆已歷經數百年至數千年歷史，趨近零新增碳排，完勝臨時耗材裝置。</span>
+            </li>
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-emerald esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>
+                </svg>
+              </span>
+              <span><strong>免買昂貴古物資產：</strong>高價頂級古物由民間藏家免費提供展出，企業僅需投入中低預算於策展規劃與文宣。</span>
+            </li>
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-emerald esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>
+                </svg>
+              </span>
+              <span><strong>第三方科學打擊贗品：</strong>透過東方森煌科學光譜履歷，建立公開透明交易秩序，體現真實公信力。</span>
+            </li>
+            <li class="esg-list__item">
+              <span class="morphicon morphicon-emerald esg-list__icon" style="width: 20px; height: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>
+                </svg>
+              </span>
+              <span><strong>一次解鎖 7 大 SDGs 指標：</strong>取得完整可視化圖文、量化數據與 SROI 財務代理指標，永續報告書最亮眼章節。</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       3. 核心亮點: 一次契合 7 大聯合國永續指標 (SDGs) & SROI 試算機
+       ========================================================================== -->
+  <section class="esg-section" id="esg-sdgs" style="background: rgba(11, 21, 28, 0.5);">
+    <div class="esg-container">
+      <div class="esg-section__header">
+        <div class="esg-badge esg-badge-gold">7 UN SDGs & SROI Metrics</div>
+        <h2 class="esg-section__title esg-serif">
+          什麼活動竟然能一次觸及七項聯合國永續指標？
+        </h2>
+        <p class="esg-section__subtitle">
+          2015 年聯合國宣布 2030 永續發展目標 (SDGs)。本計畫協助企業取得量化產出 (Outputs)、
+          SROI 財務代理定價 (Financial Proxies)，具備可視化圖文與社會影響力成果！
+        </p>
+      </div>
+
+      <!-- SDGs Visual Graphic -->
+      <div style="margin-bottom: 44px; text-align: center;">
+        <div class="esg-visual-card" style="max-width: 980px; margin: 0 auto;">
+          <img 
+            src="{{ 'esg-un-sdgs.jpg' | asset_url }}" 
+            alt="聯合國永續發展目標 SDGs" 
+            loading="lazy"
+            width="980"
+            height="490"
+          >
+        </div>
+      </div>
+
+      <!-- 7 SDG Interactive Detail Cards -->
+      <div class="esg-sdg-matrix">
+        <!-- SDG 4 -->
+        <div class="esg-sdg-card">
+          <div class="esg-sdg-card__num">SDG 4</div>
+          <div class="esg-sdg-card__name">優質教育 (Quality Education)</div>
+          <p class="esg-sdg-card__desc">
+            參觀總人次、弱勢/偏鄉學童參訪數、專場導覽與科普講座總時數。
+          </p>
+          <div class="esg-sdg-card__sroi">
+            <span class="esg-sdg-card__label">SROI 財務代理：</span>
+            <div>＝ 坊間深度藝術教育課程費用。<br><small>(例：500 位學童參訪 × 深度課程 1,500 元 ＝ <strong>75 萬元社會教育價值</strong>)</small></div>
+          </div>
+        </div>
+
+        <!-- SDG 11.4 -->
+        <div class="esg-sdg-card">
+          <div class="esg-sdg-card__num">SDG 11.4</div>
+          <div class="esg-sdg-card__name">保護世界文化遺產 (Cultural Heritage)</div>
+          <p class="esg-sdg-card__desc">
+            陳展文明價值、陳展件數、陳展器物之市場價值（保護並被世界看見）。
+          </p>
+          <div class="esg-sdg-card__sroi">
+            <span class="esg-sdg-card__label">SROI 財務代理：</span>
+            <div>＝ 博物館級文物檢驗與數位典藏費。<br><small>(例：50 件古物建立科學光譜與 X 光履歷 × 第三方機構單次檢測行情)</small></div>
+          </div>
+        </div>
+
+        <!-- SDG 9 -->
+        <div class="esg-sdg-card">
+          <div class="esg-sdg-card__num">SDG 9</div>
+          <div class="esg-sdg-card__name">產業創新與基礎設施 (Industry & Infrastructure)</div>
+          <p class="esg-sdg-card__desc">
+            以科技光譜彌補傳統眼學鑑定偏誤，核發公信力報告，創建藝文產業創新基礎設施。
+          </p>
+          <div class="esg-sdg-card__sroi">
+            <span class="esg-sdg-card__label">SROI 財務代理：</span>
+            <div>＝ 每一場策展所核發之鑑定報告公信力 ＋ 為企業品牌帶來跨界創新美譽溢價。</div>
+          </div>
+        </div>
+
+        <!-- SDG 12 -->
+        <div class="esg-sdg-card">
+          <div class="esg-sdg-card__num">SDG 12</div>
+          <div class="esg-sdg-card__name">責任消費與生產 (Responsible Consumption)</div>
+          <p class="esg-sdg-card__desc">
+            透過科學儀器攔截/辨識贗品數量；對比全新製造大型裝置藝術減少之碳排量。
+          </p>
+          <div class="esg-sdg-card__sroi">
+            <span class="esg-sdg-card__label">SROI 財務代理：</span>
+            <div>＝ 防詐欺挽回損失價值 ＋ 碳費定價。<br><small>(例：攔截 10 件高仿贗品 × 市場均價 ＝ 避免社會財務與資源浪費)</small></div>
+          </div>
+        </div>
+
+        <!-- SDG 16 -->
+        <div class="esg-sdg-card">
+          <div class="esg-sdg-card__num">SDG 16</div>
+          <div class="esg-sdg-card__name">健全制度與和平司法 (Strong Institutions)</div>
+          <p class="esg-sdg-card__desc">
+            簽署具法律與科學公信力鑑定保證的展品數、公開透明之檢測數據釋出量。
+          </p>
+          <div class="esg-sdg-card__sroi">
+            <span class="esg-sdg-card__label">SROI 財務代理：</span>
+            <div>＝ 第三方公證費用與潛在爭議防範成本，提供透明交易秩序的社會穩定價值。</div>
+          </div>
+        </div>
+
+        <!-- SDG 10 -->
+        <div class="esg-sdg-card">
+          <div class="esg-sdg-card__num">SDG 10</div>
+          <div class="esg-sdg-card__name">減少不平等 (Reduced Inequalities)</div>
+          <p class="esg-sdg-card__desc">
+            「共享藝術經紀人」參與人數、一般大眾免門檻接觸拍賣級頂級文物的總時數。
+          </p>
+          <div class="esg-sdg-card__sroi">
+            <span class="esg-sdg-card__label">SROI 財務代理：</span>
+            <div>＝ 國際拍賣行 VIP 會員費或頂級藝廊入場費，打破階級壁壘釋放等值公共紅利。</div>
+          </div>
+        </div>
+
+        <!-- SDG 1 -->
+        <div class="esg-sdg-card">
+          <div class="esg-sdg-card__num">SDG 1</div>
+          <div class="esg-sdg-card__name">經濟賦權 (No Poverty / Empowerment)</div>
+          <p class="esg-sdg-card__desc">
+            協助一般藏家與家族鑑價、參展並成功提升價值的物件總額，促進活化。
+          </p>
+          <div class="esg-sdg-card__sroi">
+            <span class="esg-sdg-card__label">SROI 財務代理：</span>
+            <div>＝ 實質活化之閒置資產增值額度。<br><small>(例：被低估的家族傳家寶，經策展與科學確認後提升的市場公信估值)</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4. 跨界扣連: 西方科技 × 東方藝術 在台灣交匯（五大產業扣連）
+       ========================================================================== -->
+  <section class="esg-section" id="esg-industries">
+    <div class="esg-container">
+      <div class="esg-section__header">
+        <div class="esg-badge esg-badge-gold">East-West Tech & Art Convergence</div>
+        <h2 class="esg-section__title esg-serif">
+          我們企業是做工業零件/半導體的，品牌文化如何跟古文物扣連？
+        </h2>
+        <p class="esg-section__subtitle">
+          古文明跨越數千年的文化底蘊，幾乎在各行各業都能找到互相榮耀的靈魂共鳴！
+          角落博物館橫跨五大古物領域：古陶瓷、青銅器、古玉器、金銅天鐵、泰國古佛牌，為企業打造專屬傳奇。
+        </p>
+      </div>
+
+      <!-- Feature Image -->
+      <div style="margin-bottom: 44px;">
+        <div class="esg-visual-card">
+          <img 
+            src="{{ 'esg-tech-art.jpg' | asset_url }}" 
+            alt="西方科技X東方藝術 在台灣交匯" 
+            loading="lazy"
+            width="1200"
+            height="450"
+          >
+          <div class="esg-hud-overlay"></div>
+          <div class="esg-hud-tag">
+            <span style="color: var(--esg-gold-light); font-weight: 700;">Zero-Carbon Ancient Civilization Curation Project</span>
+            <div style="color: #cbd5e1; font-size: 0.85rem; margin-top: 2px;">
+              Enterprise ESG Module · Digital Heritage Passport · 東西方科技與文明在台灣交匯
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Interactive Tabs: 5 Visible Grid Tiles (手機版直觀五方格，電腦版精美五列) -->
+      <div class="esg-tabs" id="esg-tabs-nav">
+        <button class="esg-tab-btn active" data-target="tab-ceramic" aria-label="古陶瓷">
+          <span class="morphicon morphicon-gold" style="width: 24px; height: 24px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 3h6M10 3v4c0 3-4 5-4 9a6 6 0 0012 0c0-4-4-6-4-9V3"/>
+            </svg>
+          </span>
+          <span class="esg-tab-btn__text">
+            <strong class="esg-tab-btn__primary">古陶瓷</strong>
+            <span class="esg-tab-btn__sub">半導體 · 材料研發</span>
+          </span>
+        </button>
+
+        <button class="esg-tab-btn" data-target="tab-bronze" aria-label="青銅器">
+          <span class="morphicon morphicon-gold" style="width: 24px; height: 24px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </span>
+          <span class="esg-tab-btn__text">
+            <strong class="esg-tab-btn__primary">青銅器</strong>
+            <span class="esg-tab-btn__sub">工業零件 · 軸承安全</span>
+          </span>
+        </button>
+
+        <button class="esg-tab-btn" data-target="tab-jade" aria-label="古玉器">
+          <span class="morphicon morphicon-gold" style="width: 24px; height: 24px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 3h12l4 6-10 13L2 9z"/>
+            </svg>
+          </span>
+          <span class="esg-tab-btn__text">
+            <strong class="esg-tab-btn__primary">古玉器</strong>
+            <span class="esg-tab-btn__sub">精密工業 · 雷射光學</span>
+          </span>
+        </button>
+
+        <button class="esg-tab-btn" data-target="tab-amulet" aria-label="泰國古佛牌">
+          <span class="morphicon morphicon-gold" style="width: 24px; height: 24px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3a9 9 0 00-9 9c0 7 9 9 9 9s9-2 9-9a9 9 0 00-9-9zM12 7v6M9 10h6"/>
+            </svg>
+          </span>
+          <span class="esg-tab-btn__text">
+            <strong class="esg-tab-btn__primary">泰國古佛牌</strong>
+            <span class="esg-tab-btn__sub">航運物流 · 保險醫療</span>
+          </span>
+        </button>
+
+        <button class="esg-tab-btn" data-target="tab-statue" aria-label="金銅天鐵">
+          <span class="morphicon morphicon-gold" style="width: 24px; height: 24px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </span>
+          <span class="esg-tab-btn__text">
+            <strong class="esg-tab-btn__primary">金銅天鐵</strong>
+            <span class="esg-tab-btn__sub">航太太空 · 光電能源</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- Mobile Swipe Control & Pagination Bar (手機版左右滑動切換控制條) -->
+      <div class="esg-mobile-swipe-bar">
+        <button class="esg-swipe-btn esg-swipe-prev" id="esg-swipe-prev" aria-label="上一個產業">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="esg-swipe-indicator">
+          <span class="esg-swipe-hint">
+            <span class="morphicon morphicon-gold" style="width: 14px; height: 14px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16l-4-4m0 0l4-4m-4 4h18M17 8l4 4m0 0l-4 4"/></svg>
+            </span>
+            各產業如何搭配？ 左右滑動
+          </span>
+          <div class="esg-swipe-dots" id="esg-swipe-dots">
+            <span class="esg-swipe-dot active" data-index="0" title="古陶瓷"></span>
+            <span class="esg-swipe-dot" data-index="1" title="青銅器"></span>
+            <span class="esg-swipe-dot" data-index="2" title="古玉器"></span>
+            <span class="esg-swipe-dot" data-index="3" title="泰國古佛牌"></span>
+            <span class="esg-swipe-dot" data-index="4" title="金銅天鐵"></span>
+          </div>
+          <span class="esg-swipe-counter" id="esg-swipe-counter">1 / 5</span>
+        </div>
+        <button class="esg-swipe-btn esg-swipe-next" id="esg-swipe-next" aria-label="下一個產業">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- Slider Wrapper for 5 Industry Tabs (支援手機觸控滑動手勢) -->
+      <div class="esg-industry-slider-wrap" id="esg-industry-slider-wrap">
+        <!-- Tab 1: 古陶瓷 -->
+        <div id="tab-ceramic" class="esg-tab-content active">
+        <div class="esg-industry-card">
+          <div class="esg-industry-info">
+            <div class="esg-industry-tag">材料科學之極致展現</div>
+            <h3 class="esg-industry-name esg-serif">古陶瓷 × 半導體產業 / 材料研發 / 化工企業</h3>
+            <div class="esg-industry-spirit">企業精神：先進材料、良率追求、火候與化工調配</div>
+            <p class="esg-industry-story">
+              陶瓷燒製是人類最早的「材料科學」與「熱力學」極致展現。宋代建盞「兔毫天目盞」、「油滴曜變盞」，皆要在高溫窯火中精準控制氣氛與還原配方，才能在釉面析出如兔毫般的結晶線條。
+              這與現代半導體在晶圓製程中對溫度、純度與化學反應的苛求如出一轍——都是從<strong>「泥土（矽）」到「高科技藝術」的煉金術</strong>！
+            </p>
+            <div class="esg-themes-box">
+              <h5>推薦策展主題</h5>
+              <div class="esg-themes-list">
+                <span class="esg-theme-chip">『四大名窯：千年的良率精算師』</span>
+                <span class="esg-theme-chip">『琺瑯彩：東西交匯的貴族藝術』</span>
+                <span class="esg-theme-chip">『一抹青花：不談文山，看見神山』</span>
+              </div>
+            </div>
+          </div>
+          <div class="esg-industry-visual">
+            <div class="esg-concept-img-card">
+              <img 
+                src="{{ 'esg-concept-ceramic-01.jpg' | asset_url }}" 
+                alt="古陶瓷 × 半導體 實境策展概念圖" 
+                loading="lazy"
+                width="800"
+                height="600"
+              >
+              <div class="esg-concept-badge">
+                <span class="morphicon morphicon-gold" style="width: 14px; height: 14px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+                </span>
+                <span>實境策展概念視覺 · 古陶瓷與材料研發舞台</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: 青銅器 -->
+      <div id="tab-bronze" class="esg-tab-content">
+        <div class="esg-industry-card">
+          <div class="esg-industry-info">
+            <div class="esg-industry-tag">結構工程之千載承諾</div>
+            <h3 class="esg-industry-name esg-serif">青銅器 × 工業零件 / 軸承 / 結構安全</h3>
+            <div class="esg-industry-spirit">企業精神：堅固、精巧、安全、承諾</div>
+            <p class="esg-industry-story">
+              青銅器裡有許多器皿自三千年前就帶有精密環扣與活動軸承（如提樑卣、帶鍊尊、帶蓋青銅壺）。
+              不論經歷朝代更迭、水淹土埋三千年，它們依然緊密咬合、靈動如初。
+              這份<strong>「歷久彌堅、從未退卻」</strong>的堅守，正代表了工業零組件製造商對安全與品質的最高承諾！
+            </p>
+            <div class="esg-themes-box">
+              <h5>推薦策展主題</h5>
+              <div class="esg-themes-list">
+                <span class="esg-theme-chip">『千年不鬆手的堅持』</span>
+                <span class="esg-theme-chip">『你以為是青銅，其實是王者』</span>
+                <span class="esg-theme-chip">『商周工程師的軸承密碼』</span>
+              </div>
+            </div>
+          </div>
+          <div class="esg-industry-visual">
+            <div class="esg-concept-img-card">
+              <img 
+                src="{{ 'esg-concept-bronze-01.jpg' | asset_url }}" 
+                alt="青銅器 × 工業零件 實境策展概念圖" 
+                loading="lazy"
+                width="800"
+                height="600"
+              >
+              <div class="esg-concept-badge">
+                <span class="morphicon morphicon-gold" style="width: 14px; height: 14px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+                </span>
+                <span>實境策展概念視覺 · 商周青銅工程學展區</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: 古玉器 -->
+      <div id="tab-jade" class="esg-tab-content">
+        <div class="esg-industry-card">
+          <div class="esg-industry-info">
+            <div class="esg-industry-tag">極致耐心與微米精度</div>
+            <h3 class="esg-industry-name esg-serif">古玉器 × 精密工業 / 雷射工藝 / 藝文工藝</h3>
+            <div class="esg-industry-spirit">企業精神：精雕細琢、溫潤內斂、誠懇厚實</div>
+            <p class="esg-industry-story">
+              在沒有電子機械的年代，古匠人必須以簡陋跎具對抗高達莫氏硬度 5～7 的玉石。
+              古人唯一的武器是<strong>「專注」</strong>，唯一的靠山是<strong>「耐心」</strong>。一個轉角與弧面，必須耗費千百次的穩健琢磨，才能喚醒那一抹內斂神韻。正如現代精密加工、雷射打磨對公差極限的苛求。
+            </p>
+            <div class="esg-themes-box">
+              <h5>推薦策展主題</h5>
+              <div class="esg-themes-list">
+                <span class="esg-theme-chip">『求一個微光，落一萬琢磨』</span>
+                <span class="esg-theme-chip">『玉望：不同時空的相同追求』</span>
+                <span class="esg-theme-chip">『溫潤入骨的工匠之魂』</span>
+              </div>
+            </div>
+          </div>
+          <div class="esg-industry-visual">
+            <div class="esg-concept-img-card">
+              <img 
+                src="{{ 'esg-concept-jade-01.jpg' | asset_url }}" 
+                alt="古玉器 × 精密工業 實境策展概念圖" 
+                loading="lazy"
+                width="800"
+                height="600"
+              >
+              <div class="esg-concept-badge">
+                <span class="morphicon morphicon-gold" style="width: 14px; height: 14px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+                </span>
+                <span>實境策展概念視覺 · 溫潤工匠琢磨主舞台</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: 泰國古佛牌 -->
+      <div id="tab-amulet" class="esg-tab-content">
+        <div class="esg-industry-card">
+          <div class="esg-industry-info">
+            <div class="esg-industry-tag">使命必達與平安守護</div>
+            <h3 class="esg-industry-name esg-serif">泰國古佛牌 × 航太運輸 / 保險醫療 / 娛樂與南向拓展</h3>
+            <div class="esg-industry-spirit">企業精神：使命必達、安全確保、南向政策</div>
+            <p class="esg-industry-story">
+              古代泰國佛牌的產生源自於實用性的「平安歸來」。在缺乏現代醫療保險與防彈護具的戰火歲月，戰士們配戴母親求來的龍婆佛牌踏上征途，平安返鄉。
+              這份守護精神完美契合<strong>航運物流、保險醫療的「守護生命與託付」</strong>，亦是台灣企業深化新南向文化交流的最佳橋樑。
+            </p>
+            <div class="esg-themes-box">
+              <h5>推薦策展主題</h5>
+              <div class="esg-themes-list">
+                <span class="esg-theme-chip">『方寸之間的寄託』</span>
+                <span class="esg-theme-chip">『戰爭與平安：古佛牌起源』</span>
+                <span class="esg-theme-chip">『名流雅士與南向文化印記』</span>
+              </div>
+            </div>
+          </div>
+          <div class="esg-industry-visual">
+            <div class="esg-concept-img-card">
+              <img 
+                src="{{ 'esg-concept-amulet-01.jpg' | asset_url }}" 
+                alt="泰國古佛牌 × 航太運輸 實境策展概念圖" 
+                loading="lazy"
+                width="800"
+                height="600"
+              >
+              <div class="esg-concept-badge">
+                <span class="morphicon morphicon-gold" style="width: 14px; height: 14px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+                </span>
+                <span>實境策展概念視覺 · 跨海託付與平安守護展台</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: 金銅天鐵法器 -->
+      <div id="tab-statue" class="esg-tab-content">
+        <div class="esg-industry-card">
+          <div class="esg-industry-info">
+            <div class="esg-industry-tag">宇宙探索與極端可靠性</div>
+            <h3 class="esg-industry-name esg-serif">金銅天鐵法器 × 航太太空 / 貴金屬 / 光電能源</h3>
+            <div class="esg-industry-spirit">企業精神：探索宇宙、天文運算、能量科技</div>
+            <p class="esg-industry-story">
+              藏傳天鐵（Thokcha）傳統上被視為天外隕鐵所鑄，是真正「來自外太空的金屬」。
+              這個故事精準扣連航太產業的精神：<strong>「向宇宙尋找未知答案，並在極端環境下追求極致可靠」</strong>。透過科學光譜檢測解析器物成分，更成就一場穿越千年的跨時空科學對話！
+            </p>
+            <div class="esg-themes-box">
+              <h5>推薦策展主題</h5>
+              <div class="esg-themes-list">
+                <span class="esg-theme-chip">『天鐵 (Thokcha)：從天而降的宗教科技』</span>
+                <span class="esg-theme-chip">『金銅法相：落在人間的金光』</span>
+                <span class="esg-theme-chip">『千年的能量科技』</span>
+              </div>
+            </div>
+          </div>
+          <div class="esg-industry-visual">
+            <div class="esg-concept-img-card">
+              <img 
+                src="{{ 'esg-concept-statue-01.jpg' | asset_url }}" 
+                alt="金銅天鐵法器 × 航太太空 實境策展概念圖" 
+                loading="lazy"
+                width="800"
+                height="600"
+              >
+              <div class="esg-concept-badge">
+                <span class="morphicon morphicon-gold" style="width: 14px; height: 14px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+                </span>
+                <span>實境策展概念視覺 · 深空能量與天鐵光譜展台</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of esg-industry-slider-wrap -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       5. 預算與方案: 最低 39 萬起，靈活模組搭配
+       ========================================================================== -->
+  <section class="esg-section" id="esg-pricing" style="background: rgba(11, 21, 28, 0.5);">
+    <div class="esg-container">
+      <!-- SROI Dynamic Interactive Calculator with Odometer Effect (移至方案上方) -->
+      <div class="esg-calc-box" id="esg-calculator" style="margin-top: 0; margin-bottom: 56px;">
+        <div style="text-align: center; margin-bottom: 36px;">
+          <div class="esg-badge esg-badge-gold" style="margin-bottom: 12px;">Dynamic SROI Simulator</div>
+          <h3 class="esg-serif" style="font-size: 2rem; color: #ffffff; margin-bottom: 10px;">
+            企業策展 SROI 效益即時試算機
+          </h3>
+          <p style="color: #cbd5e1; font-size: 1.05rem;">
+            拖動滑桿調整策展規模，即時以滾動數字預估為企業創造之量化社會投資回報 (SROI)
+          </p>
+        </div>
+
+        <div class="esg-calc-grid">
+          <!-- Sliders (Inputs & Outputs) -->
+          <div>
+            <!-- 企業投入成本控制 (Inputs) -->
+            <div class="esg-slider-group esg-budget-group">
+              <div class="esg-slider-header">
+                <span>
+                  <strong style="color: var(--esg-gold-light);">【投入成本】</strong> 企業預估策展預算 (Inputs)
+                </span>
+                <span id="val-budget" class="esg-slider-val" style="color: #6ee7b7;">NT$ 790,000</span>
+              </div>
+              <div class="esg-budget-pills">
+                <button type="button" class="esg-budget-pill" data-val="390000">微型特展 39萬</button>
+                <button type="button" class="esg-budget-pill active" data-val="790000">標準策展 79萬</button>
+                <button type="button" class="esg-budget-pill" data-val="1200000">旗艦專案 120萬</button>
+              </div>
+              <input type="range" id="esg-calc-budget" class="esg-range esg-range-budget" min="300000" max="2500000" step="50000" value="790000">
+            </div>
+
+            <!-- SDGs 社會效益產出控制 (Outputs) -->
+            <div class="esg-slider-divider-label">
+              <span>【社會效益產出】SDGs 量化產出指標 (Outputs)</span>
+            </div>
+
+            <div class="esg-slider-group">
+              <div class="esg-slider-header">
+                <span>接待學童與公眾人次 (SDG 4 優質教育)</span>
+                <span id="val-students" class="esg-slider-val">500 人次</span>
+              </div>
+              <input type="range" id="esg-calc-students" class="esg-range" min="100" max="2000" step="50" value="500">
+              <div class="esg-slider-proxy-hint">財務代理定價：NT$ 1,500 / 人次（專業文化導覽與教育課程市場價值）</div>
+            </div>
+
+            <div class="esg-slider-group">
+              <div class="esg-slider-header">
+                <span>科學檢驗與數位履歷件數 (SDG 11.4 文化遺產)</span>
+                <span id="val-artifacts" class="esg-slider-val">50 件</span>
+              </div>
+              <input type="range" id="esg-calc-artifacts" class="esg-range" min="10" max="100" step="5" value="50">
+              <div class="esg-slider-proxy-hint">財務代理定價：NT$ 25,000 / 件（光譜鑑定、材料分析與數位建檔行情）</div>
+            </div>
+
+            <div class="esg-slider-group">
+              <div class="esg-slider-header">
+                <span>辨識贗品與防偽保護件數 (SDG 12 責任消費)</span>
+                <span id="val-fakes" class="esg-slider-val">10 件</span>
+              </div>
+              <input type="range" id="esg-calc-fakes" class="esg-range" min="1" max="30" step="1" value="10">
+              <div class="esg-slider-proxy-hint">財務代理定價：NT$ 350,000 / 件（攔截贗品挽回市場損失與法律爭端成本）</div>
+            </div>
+          </div>
+
+          <!-- Real-Time Calculation Result Panel (SROI Dashboard) -->
+          <div class="esg-result-panel">
+            <!-- SROI Ratio 主視覺卡片 -->
+            <div class="esg-ratio-card">
+              <div class="esg-ratio-title">預估 SROI 社會投資回報率</div>
+              <div id="esg-sroi-ratio" class="esg-ratio-amount">6.96 : 1</div>
+              <div id="esg-ratio-subtext" class="esg-ratio-desc">每投入 NT$ 1 元策展預算，預估創造 NT$ 6.96 元社會價值</div>
+              <div class="esg-ratio-badge">
+                <span class="morphicon morphicon-emerald" style="width: 13px; height: 13px;">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+                </span>
+                <span>符合國際 SROI 標準評估架構 · 契合 7 大 SDGs</span>
+              </div>
+            </div>
+
+            <!-- 財務效益摘要對比條 (投入 vs 產出 vs 淨回報) -->
+            <div class="esg-result-summary-grid">
+              <div class="esg-summary-metric">
+                <div class="esg-summary-metric-label">企業投入成本</div>
+                <div id="esg-sroi-cost" class="esg-summary-metric-val">NT$ 790,000</div>
+              </div>
+              <div class="esg-summary-metric">
+                <div class="esg-summary-metric-label">總社會價值產出</div>
+                <div id="esg-sroi-total" class="esg-summary-metric-val val-green">NT$ 5,500,000</div>
+              </div>
+              <div class="esg-summary-metric">
+                <div class="esg-summary-metric-label">淨社會效益擴大</div>
+                <div id="esg-sroi-net" class="esg-summary-metric-val val-gold">+ NT$ 4,710,000</div>
+              </div>
+            </div>
+
+            <!-- 三大子項明細拆解 -->
+            <div class="esg-result-breakdown">
+              <div class="esg-breakdown-item">
+                <p>優質教育價值</p>
+                <span id="esg-sroi-edu">NT$ 750,000</span>
+              </div>
+              <div class="esg-breakdown-item">
+                <p>文化典藏價值</p>
+                <span id="esg-sroi-archive">NT$ 1,250,000</span>
+              </div>
+              <div class="esg-breakdown-item">
+                <p>防偽減碳價值</p>
+                <span id="esg-sroi-carbon">NT$ 3,500,000</span>
+              </div>
+            </div>
+
+            <!-- 審計公式透明備註 -->
+            <div class="esg-calc-audit-note">
+              <div class="esg-calc-audit-formula">
+                SROI Ratio = 總產出社會價值 (NT$ 5,500,000) ÷ 策展投入成本 (NT$ 790,000) = 6.96 : 1
+              </div>
+              <div>
+                * 依據第三方機構行情與社會影響力評估指南之財務代理定價（Financial Proxies）量化推估，提供永續報告書（ESG Report）第三方確信審計查核佐證。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="esg-pricing-box">
+        <div class="esg-pricing-tag">Flexible Budget & High Impact</div>
+        <h2 class="esg-section__title esg-serif" style="margin: 0 0 12px;">
+          企業每年 ESG 預算浮動，適合長年合作嗎？
+        </h2>
+        <div class="esg-pricing-val">
+          <span>策展方案最低只要</span> NT$ 390,000 <span>起</span>
+        </div>
+        <p class="esg-pricing-desc">
+          無論企業當年度預算多寡，皆有對應規模之完整配套。
+          頂級古物免費展出，只需將中低額預算投入策展與周邊推廣，即可在永續報告書中補強最棘手的文化與社會指標！
+        </p>
+
+        <!-- 4 Add-on Modules with Morphicon Cards -->
+        <h4 style="color: var(--esg-gold-light); font-size: 1.2rem; margin-top: 40px; margin-bottom: 12px;">
+          點擊挑選加值活動模組（針對企業所需之指標強化）
+        </h4>
+        <div class="esg-modules-grid">
+          <div class="esg-module-card">
+            <div class="esg-module-card__icon">
+              <span class="morphicon morphicon-gold anim-pulse" style="width: 36px; height: 36px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
+                </svg>
+              </span>
+            </div>
+            <div class="esg-module-card__name">公益鑑寶活動</div>
+            <div class="esg-module-card__desc">邀請鑑定專家為同仁及在地居民傳家寶進行現場科學檢測，彌平階級門檻。</div>
+          </div>
+
+          <div class="esg-module-card">
+            <div class="esg-module-card__icon">
+              <span class="morphicon morphicon-emerald anim-spin" style="width: 36px; height: 36px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(30 12 12)"/>
+                  <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-30 12 12)"/>
+                </svg>
+              </span>
+            </div>
+            <div class="esg-module-card__name">科普教育講座</div>
+            <div class="esg-module-card__desc">結合 XRF 光譜儀與材料科學，為偏鄉學童及大眾開啟一場科技與歷史融合的啟蒙課。</div>
+          </div>
+
+          <div class="esg-module-card">
+            <div class="esg-module-card__icon">
+              <span class="morphicon morphicon-gold" style="width: 36px; height: 36px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 3v18M3 9l9-6 9 6M6 13l-3 6h6l-3-6zM18 13l-3 6h6l-3-6z"/>
+                </svg>
+              </span>
+            </div>
+            <div class="esg-module-card__name">捐贈型拍賣會</div>
+            <div class="esg-module-card__desc">與企業聯合舉辦慈善公益競拍，部分或全數盈餘專款回饋指定公益項目。</div>
+          </div>
+
+          <div class="esg-module-card">
+            <div class="esg-module-card__icon">
+              <span class="morphicon morphicon-emerald anim-pulse" style="width: 36px; height: 36px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </span>
+            </div>
+            <div class="esg-module-card__name">展覽導覽員培訓</div>
+            <div class="esg-module-card__desc">培訓企業內部青年同仁或志工擔任文化導覽大使，提升向心力與文化素養。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       5.5 AEO & GEO 權威知識庫與常見問題 (Knowledge Base & Interactive FAQ)
+       專門針對 Google AI Overviews、精選摘要 (Featured Snippets) 與生成式 AI (Perplexity, ChatGPT) 優化
+  <!-- ==========================================================================
+       5. 策展常見問答與指標備忘 (低調雅緻摺疊備忘)
+       ========================================================================== -->
+  <section class="esg-section esg-faq-section esg-faq-subtle" id="esg-faq" style="padding: 60px 0 50px;">
+    <div class="esg-container" style="max-width: 920px;">
+      <div class="esg-section-header" style="text-align: center; margin-bottom: 30px;">
+        <span style="display: block; font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase; color: #64748b; margin-bottom: 8px;">Frequently Asked Questions</span>
+        <h3 class="esg-serif" style="font-size: 1.85rem; color: #94a3b8; font-weight: 500; margin: 0 0 10px;">
+          策展常見問答與指標備忘
+        </h3>
+        <p style="color: #64748b; font-size: 0.95rem; margin: 0 auto; max-width: 580px; line-height: 1.6;">
+          彙整零碳古文明策展之核心定義、聯合國 SDGs 指標對應、SROI 效益量化與科學防偽驗證規範。
+        </p>
+      </div>
+
+      <div class="esg-faq-accordion-wrap">
+        <!-- Q1 -->
+        <article class="esg-faq-item" id="faq-q1">
+          <button type="button" class="esg-faq-header" aria-expanded="false" aria-controls="faq-body-1">
+            <span class="esg-faq-index">Q1</span>
+            <span class="esg-faq-title-wrap">
+              <span class="esg-faq-title">什麼是「零碳古文明策展計畫」？與傳統企業 ESG 策展有何不同？</span>
+            </span>
+            <span class="esg-faq-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="esg-faq-body" id="faq-body-1" style="display: none;">
+            <div class="esg-faq-direct-box">
+              <p class="esg-faq-direct-text">
+                零碳古文明策展是以傳承數百年至千年之歷史文物為核心載體，天然無新增製造碳排放，兼顧文化平權普及與永續報告書 SROI 實質量化效益之企業綠色展覽解決方案。
+              </p>
+            </div>
+            <div class="esg-faq-details">
+              <h4>深度比較與核心差異：</h4>
+              <ul>
+                <li><strong>傳統活動的盲點：</strong>過往企業辦理 ESG 活動常需搭建木工結構、噴繪大型 PVC 帆布，活動結束後往往產生數噸不可回收之事業廢棄物與二次碳排放。</li>
+                <li><strong>零碳古文明的永續閉環：</strong>古代青銅器、高古瓷與玉器早在數百至數千年前即已完成燒造，流傳至今「零製造碳排（0 kg Added Carbon）」，透過模組化可重複利用之微氣候展櫃展出，展畢全數回庫，達成真正的零廢棄綠色策展。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q2 -->
+        <article class="esg-faq-item" id="faq-q2">
+          <button type="button" class="esg-faq-header" aria-expanded="false" aria-controls="faq-body-2">
+            <span class="esg-faq-index">Q2</span>
+            <span class="esg-faq-title-wrap">
+              <span class="esg-faq-title">古文明策展如何具體契合聯合國 7 大永續發展目標 (UN SDGs)？</span>
+            </span>
+            <span class="esg-faq-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="esg-faq-body" id="faq-body-2" style="display: none;">
+            <div class="esg-faq-direct-box">
+              <p class="esg-faq-direct-text">
+                本計畫一次扣連 7 大指標：涵蓋 SDG 4 優質教育、SDG 8/9 產業創新研發、SDG 11 文化資產保護、SDG 12 責任展陳、SDG 13 零碳氣候行動及 SDG 17 跨界永續夥伴關係。
+              </p>
+            </div>
+            <div class="esg-faq-details">
+              <h4>聯合國 7 大指標具體落實清單：</h4>
+              <div class="esg-faq-sdgs-grid">
+                <div class="esg-faq-sdg-card"><strong>SDG 4 優質教育：</strong>策辦科普導覽與文物材質工作坊，開放同仁家屬與偏鄉學童免費參與。</div>
+                <div class="esg-faq-sdg-card"><strong>SDG 8 良好工作：</strong>促進文博人才跨界合作與兼職導覽員專業津貼培育。</div>
+                <div class="esg-faq-sdg-card"><strong>SDG 9 產業創新：</strong>導入東方森煌拉曼光譜與材料物理檢測，展現企業對尖端科技之應用。</div>
+                <div class="esg-faq-sdg-card"><strong>SDG 11 永續城市與文化：</strong>落實文化資產保護（Target 11.4），將博物館珍寶引進企業大廳。</div>
+                <div class="esg-faq-sdg-card"><strong>SDG 12 責任消費與生產：</strong>全模組化氣密展櫃循環利用，展陳消耗品達 0% 廢棄。</div>
+                <div class="esg-faq-sdg-card"><strong>SDG 13 氣候行動：</strong>直接替代高碳排臨時舞台，以真實零碳文物達成碳足跡極小化。</div>
+                <div class="esg-faq-sdg-card"><strong>SDG 17 夥伴關係：</strong>串聯民間博物館、學術機構、第三方檢驗單位與永續企業。</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q3 -->
+        <article class="esg-faq-item" id="faq-q3">
+          <button type="button" class="esg-faq-header" aria-expanded="false" aria-controls="faq-body-3">
+            <span class="esg-faq-index">Q3</span>
+            <span class="esg-faq-title-wrap">
+              <span class="esg-faq-title">企業策展的 SROI（社會投資報酬率）如何量化與提供第三方審計確信？</span>
+            </span>
+            <span class="esg-faq-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="esg-faq-body" id="faq-body-3" style="display: none;">
+            <div class="esg-faq-direct-box">
+              <p class="esg-faq-direct-text">
+                依據國際 SROI 標準框架，採用公認財務代理變數（Financial Proxies）量化優質教育、古蹟資產普及與防偽減碳價值，平均預估每投入 NT$ 1 創造 NT$ 5.8+ 社會效益（SROI 1: 5.8+）。
+              </p>
+            </div>
+            <div class="esg-faq-details">
+              <h4>會計審計查核佐證標準：</h4>
+              <ul>
+                <li><strong>財務代理變數（Financial Proxies）：</strong>如「美學及歷史教育時數」對應國立博物館成人導覽收費基準、「文化陶冶滿意度」對應國際文化平權評價問卷。</li>
+                <li><strong>完整稽核證據包（Audit Package）：</strong>包含觀展人次電子簽到、教育回饋統計表、碳排放對比計算公式與東方森煌第三方檢驗編號，可直接供會計師事務所出具確信報告（Assurance Report）。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q4 -->
+        <article class="esg-faq-item" id="faq-q4">
+          <button type="button" class="esg-faq-header" aria-expanded="false" aria-controls="faq-body-4">
+            <span class="esg-faq-index">Q4</span>
+            <span class="esg-faq-title-wrap">
+              <span class="esg-faq-title">什麼是東方森煌「第三方科學光譜鑑定」？拉曼光譜與 XRF 如何防範企業公關風波？</span>
+            </span>
+            <span class="esg-faq-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="esg-faq-body" id="faq-body-4" style="display: none;">
+            <div class="esg-faq-direct-box">
+              <p class="esg-faq-direct-text">
+                採用「拉曼光譜（Raman）」檢驗古玉表面受沁之微觀分子振動結構，輔以「XRF 螢光光譜」定量釉層金屬無機元素，以非破壞客觀數據比對資料庫，徹底杜絕人為做舊偽品。
+              </p>
+            </div>
+            <div class="esg-faq-details">
+              <h4>為什麼對企業公關至關重要？</h4>
+              <ul>
+                <li><strong>傳統眼學鑑定的風險：</strong>純靠專家主觀經驗易引發爭議，若被質疑贗品將重創企業 ESG 形象與治理信譽（Governance）。</li>
+                <li><strong>科學光譜的硬核公信：</strong>透過拉曼光譜儀對礦物晶體晶格結構進行光學掃描，現代化學做舊與酸洗注膠無法偽造千年天然水解受沁特徵；配合 XRF 檢驗胎釉中鈣、鐵、鉀、鉛等元素比率，與出土標準片完全吻合，百分之百杜絕贗品風波。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q5 -->
+        <article class="esg-faq-item" id="faq-q5">
+          <button type="button" class="esg-faq-header" aria-expanded="false" aria-controls="faq-body-5">
+            <span class="esg-faq-index">Q5</span>
+            <span class="esg-faq-title-wrap">
+              <span class="esg-faq-title">企業每年 ESG 預算浮動，若預算僅數十萬元，適合長期合作嗎？</span>
+            </span>
+            <span class="esg-faq-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="esg-faq-body" id="faq-body-5" style="display: none;">
+            <div class="esg-faq-direct-box">
+              <p class="esg-faq-direct-text">
+                非常適合。Corner Museum 推出彈性預算階梯方案，策展規劃最低只要 NT$ 390,000 起，古文物均免收高價借展費，預算純粹用於專題策劃、科技展陳與 SROI 量化報告。
+              </p>
+            </div>
+            <div class="esg-faq-details">
+              <h4>三大彈性階梯方案：</h4>
+              <ul>
+                <li><strong>典藏入門方案（NT$ 39 萬起）：</strong>企業總部大廳單元主題特展（展出 3~5 件經光譜鑑定之千年經典珍品），附完整導覽牌、QR Code 數位履歷與 SROI 摘要評估。</li>
+                <li><strong>深度永續方案（NT$ 79 萬起）：</strong>包含企業跨界五大產業主題聯展、員工科普工作坊、公益鑑寶活動與永續報告書完整確信專章編撰。</li>
+                <li><strong>旗艦巡迴方案（客製化專案）：</strong>跨城市多點巡展、高階貴賓之夜、公益慈善競拍模組與文博專屬紀錄片拍攝。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q6 -->
+        <article class="esg-faq-item" id="faq-q6">
+          <button type="button" class="esg-faq-header" aria-expanded="false" aria-controls="faq-body-6">
+            <span class="esg-faq-index">Q6</span>
+            <span class="esg-faq-title-wrap">
+              <span class="esg-faq-title">展出期間古文物的安全性、微環境溫濕度與保險如何規範？</span>
+            </span>
+            <span class="esg-faq-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="esg-faq-body" id="faq-body-6" style="display: none;">
+            <div class="esg-faq-direct-box">
+              <p class="esg-faq-direct-text">
+                全展品採用博物館級氣密恆溫恆濕微環境專業展櫃、防震底座與 24 小時遠端溫濕感測，並投保國際級「藝術品綜合保險」，由文博專業團隊全程護衛，企業完全零負擔。
+              </p>
+            </div>
+            <div class="esg-faq-details">
+              <h4>文博一級標準防護配備：</h4>
+              <ul>
+                <li><strong>微環境氣候艙：</strong>展櫃內置調濕調溫調控材料，維持相對濕度 RH 45%~55%、溫度 20°C~24°C，完全阻絕大氣有害酸性氣體與粉塵接觸。</li>
+                <li><strong>全額保險保障：</strong>由國際前三大藝術品保險公司出具 All Risks 保單，涵蓋搬運、布展、展出全流程，企業無需承擔任何展品損壞或遺失之財務責任。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Bottom Consultation Prompt -->
+      <div class="esg-faq-cta-bar">
+        <div class="esg-faq-cta-info">
+          <h4>需要專屬產業主題規劃或索取永續報告書確信查核樣卷？</h4>
+          <p>我們的文博策展與 ESG 顧問團隊將於 24 小時內為您提供客製化提案試算與展品清單。</p>
+        </div>
+        <div class="esg-faq-cta-actions">
+          <a href="#esg-contact" class="esg-btn esg-btn-primary">
+            <span>預約專屬諮詢通道</span>
+            <span class="morphicon" style="width: 18px; height: 18px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       6. VIP 專屬諮詢通道
+       ========================================================================== -->
+  <section class="esg-section" id="esg-contact">
+    <div class="esg-container">
+      <div class="esg-contact-card">
+        <div class="esg-badge esg-badge-gold">VIP Enterprise Concierge</div>
+        <h2 class="esg-section__title esg-serif" style="margin-top: 18px;">
+          預約專屬企業零碳策展規劃
+        </h2>
+        <p style="color: #cbd5e1; max-width: 640px; margin: 0 auto; font-size: 1.1rem;">
+          我們的專業策展與科學檢驗團隊將依據貴公司的產業特色與永續報告目標，量身編排專屬跨界主題。
+        </p>
+
+        <div class="esg-contact-grid">
+          <a href="mailto:info@senhuang.org" class="esg-contact-item">
+            <span class="morphicon morphicon-gold" style="width: 28px; height: 28px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <div style="text-align: left;">
+              <span>官方電子信箱</span>
+              <strong>info@senhuang.org</strong>
+            </div>
+          </a>
+
+          <a href="tel:0282602664" class="esg-contact-item">
+            <span class="morphicon morphicon-gold" style="width: 28px; height: 28px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+            </span>
+            <div style="text-align: left;">
+              <span>專屬服務電話</span>
+              <strong>02-82602664</strong>
+            </div>
+          </a>
+
+          <div class="esg-contact-item">
+            <span class="morphicon morphicon-emerald" style="width: 28px; height: 28px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+              </svg>
+            </span>
+            <div style="text-align: left;">
+              <span>LINE 官方洽詢</span>
+              <strong>歡迎加官方帳號預約</strong>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 48px;">
+          <a href="mailto:info@senhuang.org?subject=【企業零碳策展諮詢】" class="esg-btn esg-btn-primary" style="padding: 18px 52px; font-size: 1.15rem;">
+            <span>立即發送合作意向信件</span>
+            <span class="morphicon" style="width: 20px; height: 20px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "ESG 零碳策展模組",
+  "tag": "section",
+  "class": "section-esg-curation",
+  "settings": [],
+  "presets": [
+    {
+      "name": "ESG 零碳策展模組"
+    }
+  ]
+}
+{% endschema %}

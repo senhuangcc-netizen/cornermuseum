@@ -1,0 +1,64 @@
+{% comment %}
+  ==============================================================================
+  Corner Museum - robots.txt.liquid
+  Enables full indexing for traditional search engines (Google, Bing)
+  and modern AI search crawlers (OpenAI GPTBot, PerplexityBot, ClaudeBot, Gemini)
+  ==============================================================================
+{% endcomment %}
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
+
+  {%- for rule in group.rules %}
+    {{- rule }}
+  {%- endfor %}
+
+  {%- if group.sitemap != blank %}
+    {{ group.sitemap }}
+  {%- endif %}
+{% endfor %}
+
+# ==============================================================================
+# Generative AI Search Engine Crawlers Authorization (GEO Optimization)
+# ==============================================================================
+User-agent: GPTBot
+Allow: /
+Allow: /pages/esg
+Allow: /blogs/insights
+Allow: /pages/llms
+Allow: /assets/llms.txt
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /pages/esg
+Allow: /blogs/insights
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /pages/esg
+Allow: /blogs/insights
+Allow: /assets/llms.txt
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /pages/esg
+Allow: /blogs/insights
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /pages/esg
+Allow: /blogs/insights
+Allow: /assets/llms.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /pages/esg
+Allow: /blogs/insights
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /pages/esg
+Allow: /blogs/insights
+
+# Sitemaps and LLM Endpoints
+Sitemap: {{ shop.url }}/sitemap.xml
+# LLMs Text Endpoint: {{ shop.url }}/assets/llms.txt

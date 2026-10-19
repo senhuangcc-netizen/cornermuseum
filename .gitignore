@@ -1,0 +1,22 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs & temp files
+*.log
+shopify_dev_log.txt
+*.tmp
+*.bak
+
+# Node dependencies (if any tools used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

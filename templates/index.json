@@ -1,0 +1,423 @@
+{
+  "sections": {
+    "tech_hero": {
+      "type": "tech-particle-banner",
+      "blocks": {
+        "hero_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Corner Museum"
+          }
+        },
+        "hero_text": {
+          "type": "text",
+          "settings": {
+            "text": "探索藝術與科技的交匯 · Explore the Intersection of Art & Technology"
+          }
+        },
+        "hero_buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "進入展廳",
+            "button_link_1": "shopify://collections/all",
+            "button_label_2": "零碳 ESG 策展",
+            "button_link_2": "/pages/esg"
+          }
+        }
+      },
+      "block_order": [
+        "hero_heading",
+        "hero_text",
+        "hero_buttons"
+      ],
+      "settings": {
+        "image_height": "large",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "about_richtext": {
+      "type": "rich-text",
+      "blocks": {
+        "about_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "關於 Corner Museum",
+            "heading_size": "h1"
+          }
+        },
+        "about_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Corner Museum 坐落於藝術與文化的交匯處，致力於為全球藏家與愛好者呈獻珍稀古物與當代藝術精品。我們以專業的鑑賞眼光與嚴謹的典藏標準，為每一件作品賦予新的生命與故事。</p>"
+          }
+        }
+      },
+      "block_order": [
+        "about_heading",
+        "about_text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "services_multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "svc_buy": {
+          "type": "column",
+          "settings": {
+            "title": "購買 · Buy",
+            "text": "<p>瀏覽我們精心策展的藝術品與古物收藏，從經典到當代，為您的私人典藏增添獨一無二的珍品。</p>",
+            "link_label": "探索藏品 →",
+            "link": "shopify://collections/all"
+          }
+        },
+        "svc_sell": {
+          "type": "column",
+          "settings": {
+            "title": "出售 · Sell",
+            "text": "<p>我們的專業鑑定團隊提供免費估價與洽購服務。無論是單件珍品或整批收藏，我們都能為您找到最佳的出售方案。</p>",
+            "link_label": "了解更多 →",
+            "link": ""
+          }
+        },
+        "svc_appraisal": {
+          "type": "column",
+          "settings": {
+            "title": "鑑定 · Appraise",
+            "text": "<p>由資深鑑定專家為您的藏品進行專業評估，提供完整的鑑定報告與市場價值分析，確保每件作品的真實性。</p>",
+            "link_label": "預約鑑定 →",
+            "link": ""
+          }
+        },
+        "svc_esg": {
+          "type": "column",
+          "settings": {
+            "title": "零碳策展 · ESG Curation",
+            "text": "<p>以傳承千年之零碳古物結合第三方科學光譜鑑定，契合 7 大聯合國 SDGs 與 SROI 6.96:1 效益評鑑，為企業打造綠色文博展覽。</p>",
+            "link_label": "了解方案 →",
+            "link": "/pages/esg"
+          }
+        }
+      },
+      "block_order": [
+        "svc_buy",
+        "svc_sell",
+        "svc_appraisal",
+        "svc_esg"
+      ],
+      "settings": {
+        "title": "我們的服務",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "featured_collection_nhtrPB": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all",
+        "products_to_show": 8,
+        "title": "最新物件",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
+    "image_with_text_about": {
+      "type": "image-with-text",
+      "blocks": {
+        "iwt_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "典藏精品",
+            "heading_size": "h0"
+          }
+        },
+        "iwt_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>每一件藏品都經過嚴格的鑑定與考證，確保其歷史價值與藝術品質。我們與全球頂尖的修復師合作，讓古物重現昔日光彩。</p>",
+            "text_style": "body"
+          }
+        },
+        "iwt_button": {
+          "type": "button",
+          "settings": {
+            "button_label": "瀏覽典藏",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "iwt_heading",
+        "iwt_text",
+        "iwt_button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/PC050075.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "center",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "熱門",
+        "products_to_show": 8,
+        "title": "精選物件",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
+    "exhibition_gallery": {
+      "type": "exhibition-gallery",
+      "blocks": {
+        "img1": { "type": "image", "settings": { "asset_image_name": "exhibition-1.jpg" } },
+        "img2": { "type": "image", "settings": { "asset_image_name": "exhibition-2.jpg" } },
+        "img3": { "type": "image", "settings": { "asset_image_name": "exhibition-4.jpg" } },
+        "img4": { "type": "image", "settings": { "asset_image_name": "exhibition-5.jpg" } },
+        "img5": { "type": "image", "settings": { "asset_image_name": "exhibition-8.jpg" } },
+        "img6": { "type": "image", "settings": { "asset_image_name": "exhibition-10.jpg" } }
+      },
+      "block_order": [
+        "img1", "img2", "img3", "img4", "img5", "img6"
+      ],
+      "settings": {
+        "subtitle": "典藏盛事 · ARCHIVAL MOMENTS",
+        "title": "展覽回顧 · Exhibition Highlights",
+        "heading_size": "h1",
+        "color_scheme": "scheme-4",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "joint_exhibition": {
+      "type": "joint-exhibition",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "brand_story": {
+      "type": "image-with-text",
+      "blocks": {
+        "bs_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "傳承與創新",
+            "heading_size": "h0"
+          }
+        },
+        "bs_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Corner Museum 融合東西方美學，以現代科技手段保存與展示珍稀藝術品。我們相信，每一件古物都承載著一段不可複製的歷史記憶，值得被以最高規格呈現給世界。</p>",
+            "text_style": "body"
+          }
+        },
+        "bs_button": {
+          "type": "button",
+          "settings": {
+            "button_label": "關於我們",
+            "button_link": "",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "bs_heading",
+        "bs_text",
+        "bs_button"
+      ],
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "center",
+        "section_color_scheme": "scheme-4",
+        "color_scheme": "scheme-4",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "faq_section": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "如何購買藝術品？",
+            "icon": "question_mark",
+            "row_content": "<p>瀏覽我們的線上展廳，選擇您心儀的作品並加入購物車。我們接受信用卡、銀行轉帳等多種付款方式，並提供全球安全配送服務。</p>",
+            "page": ""
+          }
+        },
+        "faq_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "如何出售我的收藏品？",
+            "icon": "question_mark",
+            "row_content": "<p>請透過聯絡表單或電郵與我們的鑑定團隊聯繫，提供藏品的照片與描述。我們將在 48 小時內回覆您初步評估意見。</p>",
+            "page": ""
+          }
+        },
+        "faq_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "你們提供鑑定服務嗎？",
+            "icon": "question_mark",
+            "row_content": "<p>是的。我們與多位國際認證的鑑定專家合作，提供專業的藝術品鑑定、估價與真偽認證服務。詳情請聯繫我們預約鑑定。</p>",
+            "page": ""
+          }
+        },
+        "faq_4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "配送與退貨政策為何？",
+            "icon": "truck",
+            "row_content": "<p>所有藝術品均以專業包裝配送，並提供全額保險。若收到的商品與描述不符，您可在收貨後 14 天內申請退貨，我們將全額退款。</p>",
+            "page": ""
+          }
+        },
+        "faq_esg": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "角落博物館有提供企業 ESG 零碳策展服務嗎？",
+            "icon": "leaf",
+            "row_content": "<p>有的！角落博物館設有專屬的<strong>「cornermuseum_ESG 零碳古文明策展計畫」</strong>（詳見 <a href=\"/pages/esg\">/pages/esg 專屬分頁</a>）。我們以傳承千年的零碳古物為載體，結合東方森煌第三方科學光譜鑑定，契合 7 大聯合國 SDGs 與 SROI 6.96:1 效益評估，專為企業永續報告書（ESG Report）提供兼具文化平權與科學公信之策展方案，最低 NT$ 390,000 起即可預約。</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_esg"
+      ],
+      "settings": {
+        "caption": "常見問題",
+        "heading": "藏家指南",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "scheme-4",
+        "container_color_scheme": "scheme-4",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "newsletter_signup": {
+      "type": "newsletter",
+      "blocks": {
+        "nl_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "加入我們的藝術通訊"
+          }
+        },
+        "nl_paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>訂閱以獲取最新拍賣資訊、展覽活動與獨家藏品優先預覽。</p>"
+          }
+        },
+        "nl_email": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "nl_heading",
+        "nl_paragraph",
+        "nl_email"
+      ],
+      "settings": {
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "tech_hero",
+    "about_richtext",
+    "services_multicolumn",
+    "featured_collection_nhtrPB",
+    "image_with_text_about",
+    "featured_collection",
+    "joint_exhibition",
+    "exhibition_gallery",
+    "brand_story",
+    "faq_section",
+    "newsletter_signup"
+  ]
+}

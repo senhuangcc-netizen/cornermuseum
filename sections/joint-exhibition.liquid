@@ -1,0 +1,189 @@
+{%- style -%}
+  .joint-exhibition-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: #0b151a;
+    color: #ffffff;
+  }
+
+  .joint-exhibition__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .joint-exhibition__subtitle {
+    font-size: 1.4rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #C5A059;
+    margin-bottom: 1rem;
+  }
+
+  .joint-exhibition__title {
+    font-family: var(--font-heading-family), 'Playfair Display', serif;
+    font-size: 3.2rem;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .joint-exhibition__grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 3rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .joint-exhibition__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .joint-exhibition__card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    border-radius: 4px;
+    padding: 3.5rem 3rem;
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .joint-exhibition__card:hover {
+    transform: translateY(-8px);
+    border-color: #C5A059;
+    box-shadow: 0 15px 35px rgba(0, 42, 58, 0.6);
+  }
+
+  .joint-exhibition__card-tag {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    background-color: rgba(197, 160, 89, 0.15);
+    color: #C5A059;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+  }
+
+  .joint-exhibition__card-title {
+    font-family: var(--font-heading-family), 'Playfair Display', serif;
+    font-size: 2.4rem;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 1rem;
+  }
+
+  .joint-exhibition__card-category {
+    font-size: 1.5rem;
+    color: #C5A059;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .joint-exhibition__card-desc {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 2.5rem;
+  }
+
+  .joint-exhibition__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.2rem 2.4rem;
+    background-color: transparent;
+    border: 1px solid #C5A059;
+    color: #C5A059;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: fit-content;
+  }
+
+  .joint-exhibition__btn:hover {
+    background-color: #C5A059;
+    color: #002A3A;
+  }
+{%- endstyle -%}
+
+<div class="joint-exhibition-section">
+  <div class="page-width">
+    <div class="joint-exhibition__header">
+      <div class="joint-exhibition__subtitle">EXHIBITION SPECIAL</div>
+      <h2 class="joint-exhibition__title">聯名專場 · Joint Exhibitions</h2>
+    </div>
+
+    <div class="joint-exhibition__grid">
+      <!-- 專場 1：金玉良顏 -->
+      <div class="joint-exhibition__card">
+        <div>
+          <span class="joint-exhibition__card-tag">LOT 1xx 編號專區</span>
+          <h3 class="joint-exhibition__card-title">-2025南北聯展- 金玉良顏</h3>
+          <div class="joint-exhibition__card-category">（金屬佛牌 / 玉器 / 銅器）</div>
+          <p class="joint-exhibition__card-desc">
+            彙集南北珍稀金屬尊像、古藏玉器與精雕銅器古物，展現金玉交輝之尊貴靈韻與匠心傳統。
+          </p>
+        </div>
+        <a href="/collections/all?lot=1xx" class="joint-exhibition__btn">
+          瀏覽金玉良顏專區 (LOT 1xx) &rarr;
+        </a>
+      </div>
+
+      <!-- 專場 2：摶泥成尊 -->
+      <div class="joint-exhibition__card">
+        <div>
+          <span class="joint-exhibition__card-tag">LOT 2xx 編號專區</span>
+          <h3 class="joint-exhibition__card-title">-2025南北聯展- 摶泥成尊</h3>
+          <div class="joint-exhibition__card-category">（古陶瓷 / 粉質佛牌 / 古曼童）</div>
+          <p class="joint-exhibition__card-desc">
+            揉合天地泥質與千載火藝，收錄高古陶瓷、粉質經典聖物與古曼尊像，傳承典雅靜謐古意。
+          </p>
+        </div>
+        <a href="/collections/all?lot=2xx" class="joint-exhibition__btn">
+          瀏覽摶泥成尊專區 (LOT 2xx) &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Joint Exhibition",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Joint Exhibition"
+    }
+  ]
+}
+{% endschema %}

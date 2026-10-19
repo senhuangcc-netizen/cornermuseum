@@ -1,0 +1,278 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'particles-tech.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .tech-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tech-hero .banner__media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tech-hero .banner__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4);
+  }
+
+  .tech-hero .particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: all;
+  }
+
+  .tech-hero__content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: #ffffff;
+    max-width: 800px;
+    padding: 2rem;
+  }
+
+  .tech-hero__heading {
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(2.8rem, 6vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroFadeUp 1.2s ease forwards 0.3s;
+  }
+
+  .tech-hero__text {
+    font-family: 'Inter', sans-serif !important;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeUp 1.2s ease forwards 0.6s;
+  }
+
+  .tech-hero__btn {
+    display: inline-block;
+    padding: 14px 45px;
+    background: transparent;
+    border: 1px solid rgba(197, 160, 89, 0.8);
+    color: #C5A059;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeUp 1.2s ease forwards 0.9s;
+  }
+
+  .tech-hero__btn:hover {
+    background: #C5A059;
+    color: #002A3A;
+    box-shadow: 0 0 30px rgba(197, 160, 89, 0.3);
+  }
+
+  /* Gold scanning line effect */
+  .tech-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #C5A059, transparent);
+    z-index: 4;
+    animation: scanLine 4s linear infinite;
+    opacity: 0.4;
+  }
+
+  @keyframes scanLine {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+
+  @keyframes heroFadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Placeholder background when no image */
+  .tech-hero--no-image {
+    background: linear-gradient(135deg, #002A3A 0%, #0a1628 50%, #1a0a2e 100%);
+  }
+
+  @media screen and (max-width: 749px) {
+    .tech-hero {
+      min-height: 80vh;
+    }
+    .tech-hero__heading {
+      letter-spacing: 0.08em;
+    }
+  }
+</style>
+
+<div id="Banner-{{ section.id }}" class="tech-hero{% unless section.settings.image != blank %} tech-hero--no-image{% endunless %}">
+
+  {%- if section.settings.image != blank -%}
+    <div class="banner__media media">
+      {{ section.settings.image | image_url: width: 3840 | image_tag: loading: 'eager', fetchpriority: 'high' }}
+    </div>
+  {%- else -%}
+    <div class="banner__media media" style="background: linear-gradient(135deg, #002A3A 0%, #0a1628 50%, #1a0a2e 100%);"></div>
+  {%- endif -%}
+
+  <canvas id="particles-{{ section.id }}" class="particle-canvas"></canvas>
+
+  <div class="tech-hero__content">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          <h1 class="tech-hero__heading" {{ block.shopify_attributes }}>
+            {{ block.settings.heading }}
+          </h1>
+        {%- when 'text' -%}
+          <p class="tech-hero__text" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </p>
+        {%- when 'buttons' -%}
+          <div class="tech-hero__btn-wrap" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            {%- if block.settings.button_label_1 != blank -%}
+              <a href="{{ block.settings.button_link_1 }}" class="tech-hero__btn" {{ block.shopify_attributes }}>
+                {{ block.settings.button_label_1 | escape }}
+              </a>
+            {%- endif -%}
+            {%- if block.settings.button_label_2 != blank -%}
+              <a href="{{ block.settings.button_link_2 }}" class="tech-hero__btn tech-hero__btn--emerald" style="border-color: #10b981; color: #6ee7b7;" {{ block.shopify_attributes }}>
+                {{ block.settings.button_label_2 | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tech Particle Banner",
+  "tag": "section",
+  "class": "section--tech-hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "背景圖片 (Background Image)"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "large",
+      "label": "Banner Height"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "標題 (Heading)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Corner Museum",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "副標題 (Subtitle)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "default": "探索藝術與科技的交匯",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "按鈕 (Button)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "進入展廳",
+          "label": "Button Label 1"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Button Link 1"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "default": "零碳 ESG 策展",
+          "label": "Button Label 2"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Button Link 2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tech Particle Banner",
+      "blocks": [
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "buttons" }
+      ]
+    }
+  ]
+}
+{% endschema %}

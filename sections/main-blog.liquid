@@ -1,0 +1,1487 @@
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign active_blog = blog
+  if active_blog == blank or active_blog.articles.size == 0
+    if blogs['最新消息'] != blank and blogs['最新消息'].articles.size > 0
+      assign active_blog = blogs['最新消息']
+    elsif blogs['insights'] != blank and blogs['insights'].articles.size > 0
+      assign active_blog = blogs['insights']
+    elsif blogs['news'] != blank and blogs['news'].articles.size > 0
+      assign active_blog = blogs['news']
+    elsif blogs.first != blank and blogs.first.articles.size > 0
+      assign active_blog = blogs.first
+    endif
+  endif
+
+  assign total_articles_count = active_blog.articles_count | default: active_blog.articles.size
+-%}
+
+<div class="insights-page-wrapper">
+  <!-- 1. 頁面 Hero 標題區 (純真實展示，不含任何假數據或虛構名詞) -->
+  <header class="insights-hero-header">
+    <div class="insights-hero-container">
+      <div class="insights-hud-badge">
+        <span class="hud-pulse-dot"></span>
+        <span>CORNER MUSEUM · CURATORIAL INSIGHTS</span>
+      </div>
+      <h1 class="insights-main-title">
+        {%- if active_blog.title != blank -%}
+          {{ active_blog.title }}
+        {%- else -%}
+          名家洞察 · 藏界專欄
+        {%- endif -%}
+      </h1>
+      <p class="insights-en-subtitle">Curatorial Insights & Archaeological Notes</p>
+      <p class="insights-hero-desc">
+        收錄 Corner Museum 典藏觀點、器物考據、學術專文與特展手記，以嚴謹視角呈現文博藝術精粹。
+      </p>
+    </div>
+  </header>
+
+  <!-- 2. 多維智慧檢索與分類工具列 -->
+  <section class="page-width insights-toolbar-section">
+    <div class="insights-toolbar-card">
+      <!-- 即時關鍵字搜尋框 -->
+      <div class="insights-search-box">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="insightsSearchInput" placeholder="即時搜尋專欄文章標題、作者、標籤或關鍵字..." autocomplete="off">
+        <button type="button" id="insightsSearchClear" class="search-clear-btn" style="display:none;" aria-label="清除搜尋">&times;</button>
+      </div>
+
+      <!-- 動態分類篩選標籤 (依實際 Tags 動態生成，外加「全部」與「我的典藏」) -->
+      <div class="insights-filter-nav" id="insightsFilterNav">
+        <button type="button" class="insights-filter-pill active" data-filter="all">
+          全部文章 <span class="pill-count" id="count-all">{{ total_articles_count }}</span>
+        </button>
+        {%- if active_blog.all_tags.size > 0 -%}
+          {%- for tag in active_blog.all_tags -%}
+            <button type="button" class="insights-filter-pill" data-filter="{{ tag | escape }}">
+              {{ tag }} <span class="pill-count" data-tag-count="{{ tag | escape }}">0</span>
+            </button>
+          {%- endfor -%}
+        {%- endif -%}
+        <button type="button" class="insights-filter-pill" data-filter="bookmarks">
+          我的典藏 ⭐ <span class="pill-count" id="count-bookmarks">0</span>
+        </button>
+      </div>
+
+      <!-- 工具列狀態與排序選單 -->
+      <div class="insights-toolbar-meta">
+        <div class="insights-results-counter" id="insightsResultsCounter">
+          顯示 <span id="visibleArticlesCount">{{ total_articles_count }}</span> 篇專欄文章
+        </div>
+        <div class="insights-sort-select-wrap">
+          <label for="insightsSortSelect">排序方式：</label>
+          <select id="insightsSortSelect">
+            <option value="newest">最新發布優先</option>
+            <option value="oldest">最早發布優先</option>
+            <option value="title">依標題排序</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 文章主要內容區 (以 Shopify 實際文章分頁呈現) -->
+  <main class="page-width insights-content-body">
+    {%- paginate active_blog.articles by 24 -%}
+      {%- if active_blog.articles.size > 0 -%}
+        <!-- 焦點頭條文章 (取第一篇最新真實文章) -->
+        {%- assign featured_article = active_blog.articles.first -%}
+        <section class="insights-featured-section" id="insightsFeaturedSection">
+          {%- assign feat_tags_str = '' -%}
+          {%- for t in featured_article.tags -%}
+            {%- assign feat_tags_str = feat_tags_str | append: t | append: ',' -%}
+          {%- endfor -%}
+          <div class="insights-featured-card"
+               data-article-id="{{ featured_article.id }}"
+               data-title="{{ featured_article.title | escape }}"
+               data-author="{{ featured_article.author | default: 'Corner Museum' | escape }}"
+               data-date="{{ featured_article.published_at | date: '%Y-%m-%d' }}"
+               data-date-display="{{ featured_article.published_at | date: '%Y 年 %m 月 %d 日' }}"
+               data-tags="{{ feat_tags_str | downcase | escape }}"
+               data-url="{{ featured_article.url }}"
+               data-excerpt="{{ featured_article.excerpt_or_content | strip_html | truncatewords: 50 | escape }}">
+            <div class="insights-featured-media">
+              {%- if featured_article.image -%}
+                <img src="{{ featured_article.image | image_url: width: 1200 }}" alt="{{ featured_article.title | escape }}" loading="eager">
+              {%- else -%}
+                <div class="insights-default-cover">
+                  <div class="default-cover-pattern"></div>
+                  <span class="default-cover-label">CORNER MUSEUM</span>
+                </div>
+              {%- endif -%}
+              <div class="insights-featured-overlay"></div>
+              <div class="insights-featured-tag">★ 最新發布</div>
+              <button type="button" class="insights-bookmark-btn" data-id="{{ featured_article.id }}" title="收藏至我的典藏" aria-label="收藏文章">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="insights-featured-info">
+              <div class="insights-meta-row">
+                <span class="insights-meta-date">{{ featured_article.published_at | date: "%Y 年 %m 月 %d 日" }}</span>
+                {%- if featured_article.author != blank -%}
+                  <span class="insights-meta-divider">/</span>
+                  <span class="insights-meta-author">{{ featured_article.author }}</span>
+                {%- endif -%}
+                {%- if featured_article.tags.size > 0 -%}
+                  <span class="insights-meta-divider">/</span>
+                  <span class="insights-meta-category">{{ featured_article.tags.first }}</span>
+                {%- endif -%}
+              </div>
+              <h2 class="insights-featured-title">
+                <a href="{{ featured_article.url }}">{{ featured_article.title }}</a>
+              </h2>
+              <p class="insights-featured-excerpt">
+                {%- if featured_article.excerpt.size > 0 -%}
+                  {{ featured_article.excerpt | strip_html | truncatewords: 45 }}
+                {%- elsif featured_article.content.size > 0 -%}
+                  {{ featured_article.content | strip_html | truncatewords: 45 }}
+                {%- else -%}
+                  點擊閱讀完整專欄文章內容...
+                {%- endif -%}
+              </p>
+              <div class="insights-featured-action">
+                <a href="{{ featured_article.url }}" class="insights-gold-btn">
+                  <span>閱讀全文</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <button type="button" class="insights-quick-read-btn"
+                        data-quick-title="{{ featured_article.title | escape }}"
+                        data-quick-author="{{ featured_article.author | default: 'Corner Museum' | escape }}"
+                        data-quick-date="{{ featured_article.published_at | date: '%Y 年 %m 月 %d 日' }}"
+                        data-quick-excerpt="{{ featured_article.excerpt_or_content | strip_html | truncatewords: 70 | escape }}"
+                        data-quick-url="{{ featured_article.url }}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>⚡ 快速導讀</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 專欄文章網格 (其餘真實文章，若僅有一篇則呈現完整狀態) -->
+        <section class="insights-grid-section">
+          <div class="insights-articles-grid" id="insightsArticlesGrid">
+            {%- for article in active_blog.articles offset: 1 -%}
+              {%- assign card_tags_str = '' -%}
+              {%- for t in article.tags -%}
+                {%- assign card_tags_str = card_tags_str | append: t | append: ',' -%}
+              {%- endfor -%}
+              <article class="insights-article-card"
+                       data-article-id="{{ article.id }}"
+                       data-title="{{ article.title | escape }}"
+                       data-author="{{ article.author | default: 'Corner Museum' | escape }}"
+                       data-date="{{ article.published_at | date: '%Y-%m-%d' }}"
+                       data-date-display="{{ article.published_at | date: '%Y 年 %m 月 %d 日' }}"
+                       data-tags="{{ card_tags_str | downcase | escape }}"
+                       data-url="{{ article.url }}"
+                       data-excerpt="{{ article.excerpt_or_content | strip_html | truncatewords: 40 | escape }}">
+                <div class="insights-card-img-link">
+                  {%- if article.image -%}
+                    <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title | escape }}" loading="lazy">
+                  {%- else -%}
+                    <div class="insights-default-cover card-ratio">
+                      <div class="default-cover-pattern"></div>
+                      <span class="default-cover-label">CORNER MUSEUM</span>
+                    </div>
+                  {%- endif -%}
+                  <div class="insights-card-overlay"></div>
+                  {%- if article.tags.size > 0 -%}
+                    <span class="insights-card-tag">{{ article.tags.first }}</span>
+                  {%- endif -%}
+                  <button type="button" class="insights-bookmark-btn" data-id="{{ article.id }}" title="收藏至我的典藏" aria-label="收藏文章">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="insights-card-body">
+                  <div class="insights-card-meta">
+                    <span class="insights-card-date">{{ article.published_at | date: "%Y 年 %m 月 %d 日" }}</span>
+                    {%- if article.author != blank -%}
+                      <span class="insights-meta-divider">/</span>
+                      <span class="insights-card-author">{{ article.author }}</span>
+                    {%- endif -%}
+                  </div>
+                  <h3 class="insights-card-title">
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                  </h3>
+                  <p class="insights-card-excerpt">
+                    {%- if article.excerpt.size > 0 -%}
+                      {{ article.excerpt | strip_html | truncatewords: 30 }}
+                    {%- elsif article.content.size > 0 -%}
+                      {{ article.content | strip_html | truncatewords: 30 }}
+                    {%- else -%}
+                      點擊閱讀專欄文章詳情...
+                    {%- endif -%}
+                  </p>
+                  <div class="insights-card-footer">
+                    <a href="{{ article.url }}" class="insights-read-more">
+                      <span>閱讀專文</span>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <button type="button" class="insights-card-quick-btn"
+                            data-quick-title="{{ article.title | escape }}"
+                            data-quick-author="{{ article.author | default: 'Corner Museum' | escape }}"
+                            data-quick-date="{{ article.published_at | date: '%Y 年 %m 月 %d 日' }}"
+                            data-quick-excerpt="{{ article.excerpt_or_content | strip_html | truncatewords: 60 | escape }}"
+                            data-quick-url="{{ article.url }}">
+                      ⚡ 導讀
+                    </button>
+                  </div>
+                </div>
+              </article>
+            {%- endfor -%}
+          </div>
+        </section>
+
+        <!-- 無搜尋結果提示 (純功能性) -->
+        <div id="insightsNoResults" class="insights-no-results" style="display: none;">
+          <div class="no-results-icon-wrap">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#c5a059" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </div>
+          <h3 class="no-results-title">查無符合條件的專欄文章</h3>
+          <p class="no-results-desc">請嘗試更換搜尋關鍵字，或切換至「全部文章」分類查看。</p>
+          <button type="button" class="insights-gold-btn" onclick="resetAllFilters()">
+            <span>清除所有篩選</span>
+          </button>
+        </div>
+
+        <!-- Shopify 分頁元件 -->
+        {%- if paginate.pages > 1 -%}
+          <div class="insights-pagination-wrap">
+            {%- render 'pagination', paginate: paginate -%}
+          </div>
+        {%- endif -%}
+
+      {%- else -%}
+        <!-- 當前部落格尚無任何文章時的空狀態提示 -->
+        <div class="insights-empty-state">
+          <div class="empty-icon-box">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#c5a059" stroke-width="1.5">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <h2 class="empty-title">目前尚無專欄文章</h2>
+          <p class="empty-desc">請於 Shopify 後台「部落格貼文」中發布新專欄，文章發布後將在此自動呈現。</p>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </main>
+
+  <!-- 4. 動態快速導讀彈窗 (內容由點擊之真實文章動態注入，無任何寫死文字) -->
+  <div class="insights-modal-overlay" id="insightsQuickModal" style="display: none;" onclick="closeQuickModal(event)">
+    <div class="insights-modal-container" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close-btn" onclick="closeQuickModal(event)" aria-label="關閉視窗">&times;</button>
+      <div class="modal-badge-row">
+        <span class="modal-badge">ARTICLE BRIEFING · 文章速讀</span>
+        <span class="modal-date" id="modalDate"></span>
+      </div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-author-row" id="modalAuthorRow">
+        <span>作者：<strong id="modalAuthor"></strong></span>
+      </div>
+      <div class="modal-body-content">
+        <div class="modal-takeaway-box">
+          <h4>文章摘要與重點導覽：</h4>
+          <p id="modalExcerpt"></p>
+        </div>
+      </div>
+      <div class="modal-footer-actions">
+        <a href="javascript:void(0);" id="modalFullLink" class="insights-gold-btn">
+          <span>閱讀官方完整文章</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <button type="button" class="modal-close-action-btn" onclick="closeQuickModal(event)">關閉視窗</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* === 徹底消除所有主容器邊界，鎖定黑金深邃藝廊主題 === */
+  #shopify-section-template--26829274349847__main,
+  .shopify-section:has(.insights-page-wrapper),
+  .shopify-section.section-main-blog,
+  .section-main-blog {
+    background-color: #070d12 !important;
+    background: #070d12 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border: none !important;
+  }
+
+  .insights-page-wrapper {
+    background: #070d12;
+    color: #e5e7eb;
+    min-height: 100vh;
+    padding-bottom: 90px;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* 1. 頂部 Hero 區 */
+  .insights-hero-header {
+    background: radial-gradient(circle at 50% 20%, rgba(197, 160, 89, 0.16) 0%, rgba(7, 13, 18, 0.98) 72%);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.22);
+    padding: 70px 24px 44px;
+    text-align: center;
+    position: relative;
+  }
+
+  .insights-hero-container {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .insights-hud-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px;
+    background: rgba(197, 160, 89, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: 999px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #c5a059;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .hud-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #c5a059;
+    box-shadow: 0 0 10px #c5a059;
+    animation: hudPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes hudPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.8); }
+  }
+
+  .insights-main-title {
+    font-family: 'Playfair Display', serif, "Noto Serif TC";
+    font-size: clamp(2.8rem, 5.2vw, 4.6rem);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.06em;
+    margin: 0 0 8px;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+  }
+
+  .insights-en-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    letter-spacing: 0.22em;
+    color: #c5a059;
+    text-transform: uppercase;
+    margin: 0 0 18px;
+    font-style: italic;
+  }
+
+  .insights-hero-desc {
+    font-size: 1.55rem;
+    line-height: 1.85;
+    color: #94a3b8;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* 2. 智慧搜尋與工具列 */
+  .insights-toolbar-section {
+    max-width: 1240px;
+    margin: 32px auto 36px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .insights-toolbar-card {
+    background: #0b151a;
+    border: 1px solid rgba(197, 160, 89, 0.28);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .insights-search-box {
+    position: relative;
+    width: 100%;
+  }
+
+  .insights-search-box .search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c5a059;
+  }
+
+  .insights-search-box input {
+    width: 100%;
+    padding: 14px 44px 14px 48px;
+    background: rgba(7, 13, 18, 0.9);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.5rem;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .insights-search-box input:focus {
+    border-color: #c5a059;
+    box-shadow: 0 0 16px rgba(197, 160, 89, 0.25);
+    background: #070d12;
+  }
+
+  .search-clear-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 2.2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    transition: color 0.2s ease;
+  }
+
+  .search-clear-btn:hover {
+    color: #c5a059;
+  }
+
+  .insights-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .insights-filter-pill {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    color: #cbd5e1;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 1.35rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .insights-filter-pill:hover {
+    background: rgba(197, 160, 89, 0.12);
+    border-color: rgba(197, 160, 89, 0.45);
+    color: #ffffff;
+  }
+
+  .insights-filter-pill.active {
+    background: #c5a059;
+    border-color: #c5a059;
+    color: #070d12;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(197, 160, 89, 0.35);
+  }
+
+  .pill-count {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 1.15rem;
+    background: rgba(0, 0, 0, 0.25);
+    color: inherit;
+  }
+
+  .insights-toolbar-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    font-size: 1.35rem;
+    color: #94a3b8;
+  }
+
+  .insights-results-counter span {
+    color: #c5a059;
+    font-weight: 600;
+  }
+
+  .insights-sort-select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .insights-sort-select-wrap select {
+    background: rgba(7, 13, 18, 0.85);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 1.35rem;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .insights-sort-select-wrap select:focus {
+    border-color: #c5a059;
+  }
+
+  /* 3. 內容主體區 */
+  .insights-content-body {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* 頭條大卡片 */
+  .insights-featured-section {
+    margin-bottom: 48px;
+  }
+
+  .insights-featured-card {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    background: #0b151a;
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .insights-featured-card:hover {
+    border-color: #c5a059;
+    transform: translateY(-4px);
+  }
+
+  .insights-featured-media {
+    position: relative;
+    overflow: hidden;
+    min-height: 380px;
+    background: #070d12;
+  }
+
+  .insights-featured-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+
+  .insights-featured-card:hover .insights-featured-media img {
+    transform: scale(1.04);
+  }
+
+  .insights-featured-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 13, 18, 0.1) 0%, rgba(7, 13, 18, 0.75) 100%);
+  }
+
+  .insights-featured-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #c5a059;
+    color: #070d12;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+
+  /* 預設封面圖樣式 (當文章未上傳封面圖時) */
+  .insights-default-cover {
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    background: radial-gradient(circle at 50% 50%, #15222b 0%, #070d12 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+  }
+
+  .default-cover-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: linear-gradient(30deg, #c5a059 12%, transparent 12.5%, transparent 87%, #c5a059 87.5%, #c5a059),
+                      linear-gradient(150deg, #c5a059 12%, transparent 12.5%, transparent 87%, #c5a059 87.5%, #c5a059);
+    background-size: 40px 70px;
+  }
+
+  .default-cover-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.25em;
+    color: rgba(197, 160, 89, 0.45);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 8px 18px;
+    border-radius: 4px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* 書籤按鈕 */
+  .insights-bookmark-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(7, 13, 18, 0.75);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: all 0.25s ease;
+    z-index: 3;
+  }
+
+  .insights-bookmark-btn:hover {
+    background: #c5a059;
+    color: #070d12;
+    transform: scale(1.1);
+  }
+
+  .insights-bookmark-btn.bookmarked {
+    background: #c5a059;
+    color: #070d12;
+    border-color: #c5a059;
+    box-shadow: 0 0 12px rgba(197, 160, 89, 0.6);
+  }
+
+  .insights-bookmark-btn.bookmarked svg {
+    fill: #070d12;
+  }
+
+  .insights-featured-info {
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .insights-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 1.3rem;
+    color: #94a3b8;
+    margin-bottom: 14px;
+  }
+
+  .insights-meta-divider {
+    color: rgba(197, 160, 89, 0.4);
+  }
+
+  .insights-meta-category {
+    color: #c5a059;
+    font-weight: 500;
+  }
+
+  .insights-featured-title {
+    font-family: 'Playfair Display', serif, "Noto Serif TC";
+    font-size: clamp(2.2rem, 2.8vw, 3.2rem);
+    line-height: 1.35;
+    color: #ffffff;
+    margin: 0 0 16px;
+  }
+
+  .insights-featured-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .insights-featured-title a:hover {
+    color: #c5a059;
+  }
+
+  .insights-featured-excerpt {
+    font-size: 1.5rem;
+    line-height: 1.75;
+    color: #cbd5e1;
+    margin-bottom: 28px;
+  }
+
+  .insights-featured-action {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .insights-gold-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #c5a059;
+    color: #070d12 !important;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 1.45rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(197, 160, 89, 0.3);
+  }
+
+  .insights-gold-btn:hover {
+    background: #dfb76c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.45);
+  }
+
+  .insights-quick-read-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(197, 160, 89, 0.1);
+    color: #c5a059;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 1.45rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .insights-quick-read-btn:hover {
+    background: rgba(197, 160, 89, 0.2);
+    border-color: #c5a059;
+    transform: translateY(-2px);
+  }
+
+  /* 4. 文章網格 Cards Grid */
+  .insights-articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 50px;
+  }
+
+  .insights-article-card {
+    background: #0b151a;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.35s ease;
+  }
+
+  .insights-article-card:hover {
+    border-color: rgba(197, 160, 89, 0.6);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+  }
+
+  .insights-card-img-link {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #070d12;
+  }
+
+  .insights-card-img-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+
+  .insights-article-card:hover .insights-card-img-link img {
+    transform: scale(1.06);
+  }
+
+  .insights-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 13, 18, 0) 60%, rgba(7, 13, 18, 0.8) 100%);
+  }
+
+  .insights-card-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: rgba(7, 13, 18, 0.85);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    color: #c5a059;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 1.15rem;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+
+  .insights-card-body {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .insights-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.25rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+  }
+
+  .insights-card-title {
+    font-family: 'Playfair Display', serif, "Noto Serif TC";
+    font-size: 1.85rem;
+    line-height: 1.4;
+    color: #ffffff;
+    margin: 0 0 12px;
+  }
+
+  .insights-card-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .insights-card-title a:hover {
+    color: #c5a059;
+  }
+
+  .insights-card-excerpt {
+    font-size: 1.4rem;
+    line-height: 1.65;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .insights-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .insights-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #c5a059;
+    font-size: 1.35rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .insights-read-more:hover {
+    color: #dfb76c;
+    transform: translateX(4px);
+  }
+
+  .insights-card-quick-btn {
+    background: transparent;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    color: #cbd5e1;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .insights-card-quick-btn:hover {
+    background: rgba(197, 160, 89, 0.15);
+    border-color: #c5a059;
+    color: #c5a059;
+  }
+
+  /* 無結果與空狀態 */
+  .insights-no-results,
+  .insights-empty-state {
+    text-align: center;
+    padding: 70px 24px;
+    background: #0b151a;
+    border: 1px dashed rgba(197, 160, 89, 0.3);
+    border-radius: 16px;
+    margin: 40px auto;
+    max-width: 600px;
+  }
+
+  .no-results-icon-wrap,
+  .empty-icon-box {
+    margin-bottom: 18px;
+  }
+
+  .no-results-title,
+  .empty-title {
+    font-size: 2.2rem;
+    color: #ffffff;
+    margin: 0 0 10px;
+  }
+
+  .no-results-desc,
+  .empty-desc {
+    font-size: 1.45rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  /* 分頁元件包裝 */
+  .insights-pagination-wrap {
+    margin: 40px 0 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 快速導讀彈窗 Modal */
+  .insights-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: modalFadeIn 0.3s ease;
+  }
+
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .insights-modal-container {
+    background: #0b151a;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    border-radius: 16px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 36px 32px;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+    animation: modalSlideUp 0.3s ease;
+  }
+
+  @keyframes modalSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 2.8rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    transition: color 0.2s ease;
+  }
+
+  .modal-close-btn:hover {
+    color: #c5a059;
+  }
+
+  .modal-badge-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .modal-badge {
+    background: rgba(197, 160, 89, 0.12);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    color: #c5a059;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .modal-date {
+    font-size: 1.25rem;
+    color: #94a3b8;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif, "Noto Serif TC";
+    font-size: clamp(2rem, 2.5vw, 2.6rem);
+    color: #ffffff;
+    line-height: 1.4;
+    margin: 0 0 12px;
+  }
+
+  .modal-author-row {
+    font-size: 1.35rem;
+    color: #cbd5e1;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .modal-author-row strong {
+    color: #c5a059;
+  }
+
+  .modal-takeaway-box {
+    background: rgba(7, 13, 18, 0.8);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .modal-takeaway-box h4 {
+    color: #c5a059;
+    font-size: 1.4rem;
+    margin: 0 0 8px;
+  }
+
+  .modal-takeaway-box p {
+    color: #e2e8f0;
+    font-size: 1.45rem;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .modal-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 14px;
+    margin-top: 10px;
+  }
+
+  .modal-close-action-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #cbd5e1;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .modal-close-action-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+  }
+
+  /* RWD 響應式優化 */
+  @media screen and (max-width: 1024px) {
+    .insights-featured-card {
+      grid-template-columns: 1fr;
+    }
+    .insights-featured-media {
+      min-height: 300px;
+    }
+    .insights-articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .insights-hero-header {
+      padding: 50px 16px 36px;
+    }
+    .insights-articles-grid {
+      grid-template-columns: 1fr;
+    }
+    .modal-footer-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .modal-footer-actions .insights-gold-btn,
+    .modal-footer-actions .modal-close-action-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    // 1. 書籤收藏系統 (Local Storage)
+    var BOOKMARKS_KEY = 'cornermuseum_insights_bookmarks';
+
+    function getBookmarks() {
+      try {
+        var data = localStorage.getItem(BOOKMARKS_KEY);
+        return data ? JSON.parse(data) : [];
+      } catch(e) {
+        return [];
+      }
+    }
+
+    function toggleBookmark(id) {
+      if (!id) return;
+      var strId = String(id);
+      var bookmarks = getBookmarks();
+      var idx = bookmarks.indexOf(strId);
+      if (idx > -1) {
+        bookmarks.splice(idx, 1);
+      } else {
+        bookmarks.push(strId);
+      }
+      try {
+        localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+      } catch(e) {}
+      updateBookmarkUI();
+      if (currentFilter === 'bookmarks') {
+        applyFilterAndSearch();
+      }
+    }
+
+    function updateBookmarkUI() {
+      var bookmarks = getBookmarks();
+      var countEl = document.getElementById('count-bookmarks');
+      if (countEl) countEl.textContent = bookmarks.length;
+
+      document.querySelectorAll('.insights-bookmark-btn').forEach(function(btn) {
+        var id = String(btn.getAttribute('data-id') || '');
+        if (bookmarks.indexOf(id) > -1) {
+          btn.classList.add('bookmarked');
+          btn.setAttribute('title', '已收藏 (點擊取消)');
+        } else {
+          btn.classList.remove('bookmarked');
+          btn.setAttribute('title', '收藏至我的典藏');
+        }
+      });
+    }
+
+    // 2. 分類篩選、搜尋與排序邏輯
+    var currentFilter = 'all';
+    var currentSearch = '';
+    var currentSort = 'newest';
+
+    function getAllArticleCards() {
+      var featuredCard = document.querySelector('.insights-featured-card');
+      var gridCards = Array.from(document.querySelectorAll('.insights-article-card'));
+      var all = [];
+      if (featuredCard) all.push(featuredCard);
+      return all.concat(gridCards);
+    }
+
+    function applyFilterAndSearch() {
+      var allCards = getAllArticleCards();
+      var bookmarks = getBookmarks();
+      var visibleCount = 0;
+
+      allCards.forEach(function(card) {
+        var cardId = String(card.getAttribute('data-article-id') || '');
+        var cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
+        var cardAuthor = (card.getAttribute('data-author') || '').toLowerCase();
+        var cardExcerpt = (card.getAttribute('data-excerpt') || '').toLowerCase();
+        var cardTags = (card.getAttribute('data-tags') || '').toLowerCase();
+
+        // 分類過濾
+        var matchCategory = false;
+        if (currentFilter === 'all') {
+          matchCategory = true;
+        } else if (currentFilter === 'bookmarks') {
+          matchCategory = (bookmarks.indexOf(cardId) > -1);
+        } else {
+          var targetTag = currentFilter.toLowerCase();
+          matchCategory = (cardTags.indexOf(targetTag) > -1);
+        }
+
+        // 搜尋過濾 (比對標題、作者、內文摘要、標籤)
+        var matchSearch = true;
+        if (currentSearch) {
+          var s = currentSearch;
+          matchSearch = (
+            cardTitle.indexOf(s) > -1 ||
+            cardAuthor.indexOf(s) > -1 ||
+            cardExcerpt.indexOf(s) > -1 ||
+            cardTags.indexOf(s) > -1
+          );
+        }
+
+        var isVisible = matchCategory && matchSearch;
+        var isFeatured = card.classList.contains('insights-featured-card');
+
+        if (isVisible) {
+          card.style.display = isFeatured ? 'grid' : 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // 更新計數顯示
+      var counterEl = document.getElementById('visibleArticlesCount');
+      if (counterEl) counterEl.textContent = visibleCount;
+
+      var noResultsEl = document.getElementById('insightsNoResults');
+      if (noResultsEl) {
+        noResultsEl.style.display = (visibleCount === 0 && allCards.length > 0) ? 'block' : 'none';
+      }
+    }
+
+    function sortArticles(sortType) {
+      var grid = document.getElementById('insightsArticlesGrid');
+      if (!grid) return;
+      var cards = Array.from(grid.querySelectorAll('.insights-article-card'));
+
+      cards.sort(function(a, b) {
+        var dateA = a.getAttribute('data-date') || '';
+        var dateB = b.getAttribute('data-date') || '';
+        var titleA = a.getAttribute('data-title') || '';
+        var titleB = b.getAttribute('data-title') || '';
+
+        if (sortType === 'newest') {
+          return dateB.localeCompare(dateA);
+        } else if (sortType === 'oldest') {
+          return dateA.localeCompare(dateB);
+        } else if (sortType === 'title') {
+          return titleA.localeCompare(titleB);
+        }
+        return 0;
+      });
+
+      cards.forEach(function(c) {
+        grid.appendChild(c);
+      });
+    }
+
+    function updatePillCounts() {
+      var allCards = getAllArticleCards();
+      var tagCounts = {};
+
+      allCards.forEach(function(c) {
+        var rawTags = c.getAttribute('data-tags') || '';
+        if (rawTags) {
+          var splitTags = rawTags.split(',').map(function(t) { return t.trim().toLowerCase(); }).filter(Boolean);
+          splitTags.forEach(function(st) {
+            tagCounts[st] = (tagCounts[st] || 0) + 1;
+          });
+        }
+      });
+
+      // 更新全部文章數量
+      var allCountEl = document.getElementById('count-all');
+      if (allCountEl) allCountEl.textContent = allCards.length;
+
+      // 更新每個標籤 Pill 的計數
+      document.querySelectorAll('.insights-filter-pill[data-filter]').forEach(function(pill) {
+        var filterVal = pill.getAttribute('data-filter');
+        if (filterVal && filterVal !== 'all' && filterVal !== 'bookmarks') {
+          var countSpan = pill.querySelector('.pill-count');
+          if (countSpan) {
+            countSpan.textContent = tagCounts[filterVal.toLowerCase()] || 0;
+          }
+        }
+      });
+    }
+
+    // 3. 事件綁定初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      updatePillCounts();
+      updateBookmarkUI();
+      applyFilterAndSearch();
+
+      // 分類標籤點擊切換
+      var filterBtns = document.querySelectorAll('.insights-filter-pill');
+      filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          currentFilter = this.getAttribute('data-filter') || 'all';
+          applyFilterAndSearch();
+        });
+      });
+
+      // 搜尋框輸入即時監聽
+      var searchInput = document.getElementById('insightsSearchInput');
+      var searchClear = document.getElementById('insightsSearchClear');
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          currentSearch = this.value.trim().toLowerCase();
+          if (searchClear) searchClear.style.display = currentSearch ? 'block' : 'none';
+          applyFilterAndSearch();
+        });
+      }
+      if (searchClear) {
+        searchClear.addEventListener('click', function() {
+          if (searchInput) searchInput.value = '';
+          currentSearch = '';
+          searchClear.style.display = 'none';
+          applyFilterAndSearch();
+        });
+      }
+
+      // 排序選單切換
+      var sortSelect = document.getElementById('insightsSortSelect');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+          currentSort = this.value;
+          sortArticles(currentSort);
+        });
+      }
+
+      // 點擊收藏按鈕 (委派處理)
+      document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.insights-bookmark-btn');
+        if (btn) {
+          e.preventDefault();
+          e.stopPropagation();
+          var id = btn.getAttribute('data-id');
+          if (id) toggleBookmark(id);
+        }
+      });
+
+      // 快速導讀按鈕點擊 (讀取真實卡片資料注入 Modal)
+      document.addEventListener('click', function(e) {
+        var quickBtn = e.target.closest('.insights-quick-read-btn, .insights-card-quick-btn');
+        if (quickBtn) {
+          e.preventDefault();
+          var t = quickBtn.getAttribute('data-quick-title') || '專欄導讀';
+          var a = quickBtn.getAttribute('data-quick-author') || 'Corner Museum';
+          var d = quickBtn.getAttribute('data-quick-date') || '';
+          var ex = quickBtn.getAttribute('data-quick-excerpt') || '';
+          var u = quickBtn.getAttribute('data-quick-url') || '';
+          openQuickModal(t, a, d, ex, u);
+        }
+      });
+
+      // ESC 鍵關閉彈窗
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeQuickModal();
+      });
+    });
+
+    // 4. 全域速讀彈窗操作函數 (動態灌入真實文章內容)
+    window.openQuickModal = function(title, author, date, excerpt, url) {
+      var modal = document.getElementById('insightsQuickModal');
+      if (!modal) return;
+      var titleEl = document.getElementById('modalTitle');
+      var authorEl = document.getElementById('modalAuthor');
+      var dateEl = document.getElementById('modalDate');
+      var excerptEl = document.getElementById('modalExcerpt');
+      var fullLinkEl = document.getElementById('modalFullLink');
+
+      if (titleEl) titleEl.textContent = title;
+      if (authorEl) authorEl.textContent = author;
+      if (dateEl) dateEl.textContent = date;
+      if (excerptEl) excerptEl.textContent = excerpt || '無摘要說明';
+      if (fullLinkEl) {
+        fullLinkEl.href = url || 'javascript:void(0);';
+        fullLinkEl.style.display = url ? 'inline-flex' : 'none';
+      }
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeQuickModal = function(e) {
+      var modal = document.getElementById('insightsQuickModal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+
+    window.resetAllFilters = function() {
+      var searchInput = document.getElementById('insightsSearchInput');
+      if (searchInput) searchInput.value = '';
+      currentSearch = '';
+      var searchClear = document.getElementById('insightsSearchClear');
+      if (searchClear) searchClear.style.display = 'none';
+
+      var allPill = document.querySelector('.insights-filter-pill[data-filter="all"]');
+      if (allPill) {
+        document.querySelectorAll('.insights-filter-pill').forEach(function(b) { b.classList.remove('active'); });
+        allPill.classList.add('active');
+        currentFilter = 'all';
+      }
+      applyFilterAndSearch();
+    };
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "名家洞察專欄",
+  "tag": "section",
+  "class": "section section-main-blog",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "顯示文章封面圖"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "顯示發布日期"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": true,
+      "label": "顯示專欄作者"
+    }
+  ]
+}
+{% endschema %}

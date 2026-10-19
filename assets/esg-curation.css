@@ -1,0 +1,3030 @@
+/* ==========================================================================
+   Corner Museum - ESG Zero-Carbon Curation Stylesheet (Enhanced Edition)
+   - Dynamic Morphicons (Replacing Emojis)
+   - Unified Typographic Hierarchy
+   - Continuous Infini-Ticker & Odometers
+   - Visual Loader Portal Transition
+   - Three.js Interactive 3D Holographic Stage
+   ========================================================================== */
+
+:root {
+  --esg-bg-dark: #070d12;
+  --esg-bg-deep: #04080c;
+  --esg-bg-card: rgba(11, 21, 28, 0.78);
+  --esg-bg-card-hover: rgba(16, 30, 40, 0.92);
+  --esg-gold: #c5a059;
+  --esg-gold-light: #f5dfb0;
+  --esg-gold-dark: #8c6e33;
+  --esg-gold-glow: rgba(197, 160, 89, 0.4);
+  --esg-emerald: #10b981;
+  --esg-emerald-glow: rgba(16, 185, 129, 0.4);
+  --esg-emerald-light: #6ee7b7;
+  --esg-cyan: #06b6d4;
+  --esg-text-main: #f8fafc;
+  --esg-text-muted: #94a3b8;
+  --esg-text-dim: #64748b;
+  --esg-border: rgba(197, 160, 89, 0.28);
+  --esg-border-hover: rgba(197, 160, 89, 0.75);
+  --esg-radius-lg: 16px;
+  --esg-radius-md: 10px;
+  --esg-transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   1. NeoLeaf-Style Wave Liquid Loader Portal (約 3 秒)
+   ========================================================================== */
+.esg-loader-portal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #141618;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+  padding: 24px;
+  overflow: hidden;
+  animation: esgPortalSafetyDismiss 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes esgPortalSafetyDismiss {
+  0%, 65% {
+    opacity: 1;
+    visibility: visible;
+  }
+  85% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: none !important;
+  }
+}
+
+.esg-loader-portal.fade-out,
+.esg-loader-portal.is-done {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
+/* Force section and page visibility */
+.section-esg-curation,
+[id*="esg_curation"],
+.esg-page {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.esg-neoleaf-loader-box {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+}
+
+.esg-wave-canvas-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 962 / 210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#esg-neoleaf-wave-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.esg-neoleaf-sub {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 14px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.12rem;
+  font-weight: 500;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.esg-neoleaf-sub span {
+  display: inline-block;
+  min-width: 28px;
+  text-align: right;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   2. Global Layout & Typography (字體加大高舒適度版)
+   ========================================================================== */
+.esg-page {
+  background-color: var(--esg-bg-dark);
+  color: var(--esg-text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.88;
+  font-size: 21px;
+  z-index: 1;
+}
+
+/* Three.js Background Canvas */
+.esg-webgl-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.esg-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.esg-serif {
+  font-family: 'Playfair Display', "Noto Serif TC", serif;
+  letter-spacing: 0.03em;
+}
+
+/* Badges */
+.esg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--esg-emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.18);
+}
+
+.esg-badge-gold {
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--esg-gold-light);
+  border-color: rgba(197, 160, 89, 0.45);
+  box-shadow: 0 0 25px rgba(197, 160, 89, 0.18);
+}
+
+/* ==========================================================================
+   3. Dynamic Morphicons (替代 Emoji 的高端向量動態圖標)
+   ========================================================================== */
+.morphicon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+.morphicon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.morphicon:hover {
+  transform: scale(1.12);
+}
+
+.morphicon-gold {
+  color: var(--esg-gold-light);
+  stroke: var(--esg-gold);
+}
+
+.morphicon-emerald {
+  color: var(--esg-emerald-light);
+  stroke: var(--esg-emerald);
+}
+
+.morphicon-red {
+  color: #f87171;
+  stroke: #ef4444;
+}
+
+/* Morphicon Keyframe Animations */
+.anim-pulse {
+  animation: morphPulse 2.5s ease-in-out infinite;
+}
+
+.anim-spin {
+  animation: esgSpinClockwise 8s linear infinite;
+}
+
+.anim-draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  animation: morphDraw 3s ease-in-out infinite alternate;
+}
+
+@keyframes morphPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px currentColor); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 10px currentColor); }
+}
+
+@keyframes morphDraw {
+  0% { stroke-dashoffset: 60; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* ==========================================================================
+   4. Hero Section & Interactive 3D Hologram Stage
+   ========================================================================== */
+.esg-hero {
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 130px 0 90px;
+  background: radial-gradient(circle at 50% 15%, rgba(16, 185, 129, 0.16) 0%, rgba(7, 13, 18, 0.98) 75%);
+}
+
+.esg-hero__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.esg-hero__title {
+  font-size: clamp(2.8rem, 5vw, 4.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 24px 0 18px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--esg-gold-light) 55%, var(--esg-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.esg-hero__subtitle {
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  color: var(--esg-emerald-light);
+  font-weight: 600;
+  margin-bottom: 26px;
+  letter-spacing: 0.02em;
+}
+
+.esg-hero__desc {
+  font-size: 1.25rem;
+  color: #cbd5e1;
+  max-width: 660px;
+  margin-bottom: 40px;
+  line-height: 2.0;
+}
+
+.esg-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.esg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 36px;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--esg-transition);
+  cursor: pointer;
+}
+
+.esg-btn-primary {
+  background: linear-gradient(135deg, var(--esg-gold) 0%, var(--esg-gold-dark) 100%);
+  color: #000000;
+  border: 1px solid var(--esg-gold-light);
+  box-shadow: 0 4px 28px rgba(197, 160, 89, 0.4);
+}
+
+.esg-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 38px rgba(197, 160, 89, 0.65);
+  background: linear-gradient(135deg, var(--esg-gold-light) 0%, var(--esg-gold) 100%);
+}
+
+.esg-btn-outline {
+  background: rgba(11, 21, 28, 0.65);
+  color: var(--esg-text-main);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(12px);
+}
+
+.esg-btn-outline:hover {
+  border-color: var(--esg-emerald);
+  color: var(--esg-emerald-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.25);
+}
+
+/* ==========================================================================
+   4. Corner Museum & Zero-Carbon ESG Dynamic Interactive Logo Stage
+   ========================================================================== */
+.esg-brand-stage-box,
+.esg-3d-stage-box {
+  position: relative;
+  border-radius: var(--esg-radius-lg);
+  background: radial-gradient(circle at 50% 40%, rgba(197, 160, 89, 0.12) 0%, rgba(16, 185, 129, 0.08) 45%, #050a0e 90%);
+  border: 1px solid var(--esg-border);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 50px rgba(197, 160, 89, 0.15);
+  overflow: hidden;
+  height: 480px;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  perspective: 1200px;
+  user-select: none;
+}
+
+/* Top and Bottom HUD */
+.esg-brand-hud-top,
+.esg-3d-hud-top {
+  position: relative;
+  padding: 18px 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.esg-brand-hud-cross {
+  color: var(--esg-gold);
+  font-weight: 700;
+  font-size: 1.1rem;
+  opacity: 0.6;
+}
+
+.esg-brand-hud-pill,
+.esg-3d-hud-pill {
+  background: rgba(7, 13, 18, 0.85);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  color: var(--esg-gold-light);
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.esg-brand-hud-pill--emerald {
+  border-color: rgba(16, 185, 129, 0.45);
+  color: var(--esg-emerald-light);
+}
+
+.esg-brand-hud-bottom,
+.esg-3d-hud-bottom {
+  position: relative;
+  margin: 0 16px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+  background: rgba(7, 13, 18, 0.82);
+  border: 1px solid rgba(197, 160, 89, 0.28);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 0.8rem;
+}
+
+.esg-brand-hint,
+.esg-3d-hint {
+  color: var(--esg-gold-light);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+
+.esg-brand-telemetry,
+.esg-3d-telemetry {
+  color: #94a3b8;
+  font-family: monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+}
+
+/* 3D Perspective Card Container */
+.esg-brand-card {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 10px 20px;
+  z-index: 5;
+}
+
+/* Background Stardust & Orbit Canvas */
+.esg-brand-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dual Logo Display Layout */
+.esg-brand-duo-wrap {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+  transform: translateZ(20px);
+}
+
+.esg-brand-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 1. Corner Museum Medallion */
+.esg-brand-medallion {
+  position: relative;
+  width: 130px;
+  height: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 35%, rgba(197, 160, 89, 0.16) 0%, rgba(10, 18, 24, 0.9) 80%);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(197, 160, 89, 0.22);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+.esg-brand-medallion--gold:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(197, 160, 89, 0.4);
+  border-color: var(--esg-gold-light);
+}
+
+.esg-medallion-halo {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.2) 0%, transparent 65%);
+  animation: esgPulseGlow 3.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.esg-medallion-shimmer {
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: rotate(25deg);
+  animation: esgShimmerSweep 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes esgShimmerSweep {
+  0%, 70% { left: -100%; }
+  100% { left: 200%; }
+}
+
+@keyframes esgPulseGlow {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  100% { transform: scale(1.15); opacity: 0.9; }
+}
+
+.esg-brand-logo-img {
+  width: 95px;
+  height: auto;
+  max-height: 115px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+/* Energy Connector */
+.esg-brand-connector {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.esg-connector-pulse {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.35) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 70%);
+  animation: esgConnectorBeat 2.4s ease-in-out infinite;
+}
+
+@keyframes esgConnectorBeat {
+  0%, 100% { transform: scale(0.85); opacity: 0.4; }
+  50% { transform: scale(1.35); opacity: 0.85; }
+}
+
+.esg-connector-symbol {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--esg-gold-light) 0%, var(--esg-emerald-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 0 15px rgba(197, 160, 89, 0.4);
+}
+
+.esg-connector-subtext {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+/* 2. ESG Dynamic Medallion */
+.esg-brand-medallion--emerald {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: radial-gradient(circle at 50% 35%, rgba(16, 185, 129, 0.18) 0%, rgba(7, 16, 20, 0.92) 80%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(16, 185, 129, 0.22);
+}
+
+.esg-brand-medallion--emerald:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(16, 185, 129, 0.45);
+  border-color: var(--esg-emerald-light);
+}
+
+.esg-esg-halo {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, transparent 65%);
+  animation: esgPulseGlow 3.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* ESG Orbiting Ring & Badges (E, S, G) */
+.esg-esg-orbit-ring {
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(16, 185, 129, 0.35);
+  animation: esgOrbitRotate 16s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes esgOrbitRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.esg-orbit-pill {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #064e3b;
+  border: 1px solid var(--esg-emerald-light);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  animation: esgOrbitCounterRotate 16s linear infinite;
+}
+
+@keyframes esgOrbitCounterRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.dot-e { top: -9px; left: calc(50% - 9px); }
+.dot-s { bottom: 12px; right: -5px; }
+.dot-g { bottom: 12px; left: -5px; }
+
+.esg-esg-emblem-core {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.esg-esg-logo-svg-wrap {
+  width: 58px;
+  height: 58px;
+  filter: drop-shadow(0 3px 10px rgba(16, 185, 129, 0.4));
+  animation: esgLeafFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes esgLeafFloat {
+  0% { transform: translateY(0px) scale(0.98); }
+  100% { transform: translateY(-4px) scale(1.02); }
+}
+
+.esg-esg-svg-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.esg-esg-text-mark {
+  font-family: 'Inter', "Segoe UI", sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 2px;
+}
+
+/* Badge Labels */
+.esg-brand-badge-label {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.esg-badge-label-main {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--esg-gold-light);
+  letter-spacing: 0.04em;
+}
+
+.esg-badge-label-main--emerald {
+  color: var(--esg-emerald-light);
+}
+
+.esg-badge-label-sub {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+/* Live Indicators Row */
+.esg-brand-live-row {
+  position: relative;
+  z-index: 3;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  transform: translateZ(15px);
+}
+
+.esg-brand-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(7, 13, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 0.72rem;
+  color: #cbd5e1;
+}
+
+.esg-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.esg-dot-gold {
+  background: var(--esg-gold);
+  box-shadow: 0 0 6px var(--esg-gold);
+}
+
+.esg-dot-emerald {
+  background: var(--esg-emerald);
+  box-shadow: 0 0 6px var(--esg-emerald);
+}
+
+/* ==========================================================================
+   5. Continuous Infinite Ticker / Marquee (Corner Museum LOGO 循環播放動畫)
+   ========================================================================== */
+.esg-ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, #070d12 0%, #0d1e28 50%, #070d12 100%);
+  border-top: 1px solid var(--esg-border);
+  border-bottom: 1px solid var(--esg-border);
+  padding: 18px 0;
+  position: relative;
+  z-index: 3;
+}
+
+.esg-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: esgTickerScroll 40s linear infinite;
+  align-items: center;
+}
+
+.esg-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.esg-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 16px;
+  white-space: nowrap;
+}
+
+.esg-ticker-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(197, 160, 89, 0.08);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: 999px;
+  padding: 8px 22px 8px 14px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.esg-ticker-brand-badge:hover {
+  background: rgba(197, 160, 89, 0.18);
+  border-color: var(--esg-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(197, 160, 89, 0.35);
+}
+
+.esg-ticker-logo-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(197, 160, 89, 0.5));
+  transition: transform 0.3s ease;
+}
+
+.esg-ticker-brand-badge:hover .esg-ticker-logo-img {
+  transform: scale(1.05);
+}
+
+.esg-ticker-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  color: var(--esg-gold-light);
+}
+
+.esg-ticker-brand-sub {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.08em;
+}
+
+.esg-ticker-pill {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--esg-emerald-light);
+  background: rgba(16, 185, 129, 0.22);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+}
+
+.esg-ticker-star {
+  color: var(--esg-gold);
+  font-size: 1.25rem;
+  opacity: 0.85;
+  margin: 0 6px;
+  text-shadow: 0 0 10px rgba(197, 160, 89, 0.6);
+}
+
+@keyframes esgTickerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .esg-ticker-wrap {
+    padding: 12px 0;
+  }
+  .esg-ticker-brand-badge {
+    padding: 6px 14px 6px 10px;
+    gap: 10px;
+  }
+  .esg-ticker-logo-img {
+    height: 32px;
+  }
+  .esg-ticker-brand-name {
+    font-size: 0.95rem;
+  }
+  .esg-ticker-brand-sub {
+    font-size: 0.85rem;
+  }
+  .esg-ticker-pill {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+  }
+}
+
+/* ==========================================================================
+   6. 4 Key Stat Odometer Cards (里程碑數字滾動)
+   ========================================================================== */
+.esg-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin: 50px 0 0;
+}
+
+.esg-stat-card {
+  background: var(--esg-bg-card);
+  border: 1px solid var(--esg-border);
+  border-radius: var(--esg-radius-md);
+  padding: 28px 24px;
+  text-align: center;
+  transition: var(--esg-transition);
+}
+
+.esg-stat-card:hover {
+  border-color: var(--esg-emerald);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+}
+
+.esg-stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--esg-gold-light);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.esg-stat-label {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.esg-stat-desc {
+  font-size: 1.05rem;
+  color: var(--esg-text-muted);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   7. Pain Points vs Solution (統一閱讀階層)
+   ========================================================================== */
+.esg-section {
+  padding: 110px 0;
+  position: relative;
+}
+
+.esg-section__header {
+  text-align: center;
+  max-width: 880px;
+  margin: 0 auto 64px;
+}
+
+.esg-section__title {
+  font-size: clamp(2.3rem, 4vw, 3.4rem);
+  font-weight: 700;
+  margin: 20px 0;
+  color: #ffffff;
+  line-height: 1.35;
+}
+
+.esg-section__subtitle {
+  font-size: 1.25rem;
+  color: #cbd5e1;
+  line-height: 1.9;
+}
+
+.esg-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+}
+
+.esg-card {
+  background: var(--esg-bg-card);
+  border: 1px solid var(--esg-border);
+  border-radius: var(--esg-radius-lg);
+  padding: 44px;
+  backdrop-filter: blur(16px);
+  transition: var(--esg-transition);
+  position: relative;
+}
+
+.esg-card:hover {
+  background: var(--esg-bg-card-hover);
+  border-color: var(--esg-border-hover);
+  transform: translateY(-4px);
+}
+
+.esg-card--problem {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.esg-card--problem:hover {
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: 0 12px 45px rgba(239, 68, 68, 0.12);
+}
+
+.esg-card--solution {
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 12px 45px rgba(16, 185, 129, 0.15);
+}
+
+.esg-card--solution:hover {
+  border-color: var(--esg-emerald);
+  box-shadow: 0 16px 55px rgba(16, 185, 129, 0.28);
+}
+
+.esg-card__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.esg-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.esg-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 1.18rem;
+  color: #cbd5e1;
+  line-height: 1.9;
+}
+
+.esg-list__icon {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   8. 7 UN SDGs Interactive Matrix & SROI Calculator
+   ========================================================================== */
+.esg-visual-card {
+  position: relative;
+  border-radius: var(--esg-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--esg-border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(16, 185, 129, 0.15);
+  transition: var(--esg-transition);
+}
+
+.esg-visual-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.esg-visual-card:hover img {
+  transform: scale(1.02);
+}
+
+.esg-hud-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  margin: 14px;
+  border-radius: 12px;
+}
+
+.esg-hud-tag {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  padding: 14px 20px;
+  background: rgba(7, 13, 18, 0.88);
+  backdrop-filter: blur(14px);
+  border-radius: 8px;
+  border-left: 4px solid var(--esg-gold);
+  font-size: 0.95rem;
+}
+
+.esg-sdg-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 28px;
+  margin-top: 48px;
+}
+
+.esg-sdg-card {
+  background: rgba(11, 21, 28, 0.88);
+  border: 1px solid rgba(197, 160, 89, 0.25);
+  border-radius: var(--esg-radius-md);
+  padding: 28px 30px;
+  transition: var(--esg-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.esg-sdg-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--esg-gold);
+  transition: width 0.3s ease;
+}
+
+.esg-sdg-card:hover {
+  border-color: var(--esg-gold);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 160, 89, 0.25);
+}
+
+.esg-sdg-card:hover::before {
+  width: 6px;
+}
+
+.esg-sdg-card__num {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--esg-gold-light);
+  line-height: 1;
+  margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+}
+
+.esg-sdg-card__name {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.esg-sdg-card__desc {
+  font-size: 1.15rem;
+  color: #cbd5e1;
+  line-height: 1.85;
+  margin: 0 0 14px;
+}
+
+.esg-sdg-card__sroi {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px dashed rgba(16, 185, 129, 0.35);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 1.1rem;
+  color: #e2e8f0;
+  line-height: 1.75;
+}
+
+.esg-sdg-card__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--esg-emerald-light);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+/* SROI Calculator Box */
+.esg-calc-box {
+  background: linear-gradient(145deg, rgba(13, 25, 33, 0.92) 0%, rgba(7, 13, 18, 0.98) 100%);
+  border: 1px solid var(--esg-border);
+  border-radius: var(--esg-radius-lg);
+  padding: 52px;
+  margin-top: 64px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 0 0 60px rgba(16, 185, 129, 0.18);
+}
+
+.esg-calc-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 52px;
+  align-items: center;
+}
+
+.esg-slider-group {
+  margin-bottom: 32px;
+}
+
+.esg-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.esg-slider-val {
+  color: var(--esg-gold-light);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.esg-range {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.16);
+  outline: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.esg-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--esg-gold);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 18px rgba(197, 160, 89, 0.85);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.esg-range::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+.esg-result-panel {
+  background: rgba(7, 13, 18, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: var(--esg-radius-md);
+  padding: 36px;
+  text-align: center;
+}
+
+.esg-result-title {
+  font-size: 1rem;
+  color: var(--esg-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.esg-result-amount {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 800;
+  color: var(--esg-emerald-light);
+  margin-bottom: 18px;
+  text-shadow: 0 0 35px rgba(16, 185, 129, 0.45);
+  font-family: 'Playfair Display', monospace, serif;
+}
+
+.esg-result-breakdown {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 22px;
+  margin-top: 22px;
+}
+
+.esg-breakdown-item p {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+  color: var(--esg-text-muted);
+}
+
+.esg-breakdown-item span {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--esg-gold-light);
+}
+
+/* SROI Budget Input & Multiplier Enhancements (Option A) */
+.esg-budget-group {
+  background: rgba(197, 160, 89, 0.08);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: var(--esg-radius-md);
+  padding: 18px;
+  margin-bottom: 28px;
+}
+
+.esg-budget-pills {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.esg-budget-pill {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(7, 13, 18, 0.7);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.esg-budget-pill:hover {
+  background: rgba(197, 160, 89, 0.2);
+  color: #ffffff;
+  border-color: var(--esg-gold);
+}
+
+.esg-budget-pill.active {
+  background: var(--esg-gold);
+  color: #070d12;
+  border-color: var(--esg-gold);
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(197, 160, 89, 0.5);
+}
+
+.esg-range-budget::-webkit-slider-thumb {
+  background: #10b981;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.85);
+}
+
+.esg-slider-divider-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 18px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--esg-gold-light);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.esg-slider-divider-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(197, 160, 89, 0.25);
+}
+
+.esg-slider-proxy-hint {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* SROI Ratio Hero Card */
+.esg-ratio-card {
+  background: radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.16) 0%, rgba(7, 13, 18, 0.95) 75%);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  border-radius: var(--esg-radius-md);
+  padding: 24px 20px;
+  margin-bottom: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(16, 185, 129, 0.12);
+}
+
+.esg-ratio-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--esg-gold-light);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.esg-ratio-amount {
+  font-size: clamp(3rem, 5.2vw, 4.4rem);
+  font-weight: 900;
+  color: #34d399;
+  font-family: 'Playfair Display', monospace, serif;
+  line-height: 1.1;
+  margin: 6px 0 10px;
+  text-shadow: 0 0 40px rgba(16, 185, 129, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.esg-ratio-desc {
+  font-size: 1rem;
+  color: #f1f5f9;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.esg-ratio-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: var(--esg-emerald-light);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* SROI Summary Row (投入 vs 產出 vs 淨回報) */
+.esg-result-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background: rgba(11, 21, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px 12px;
+  margin-bottom: 20px;
+}
+
+.esg-summary-metric {
+  text-align: center;
+}
+
+.esg-summary-metric-label {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.esg-summary-metric-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.esg-summary-metric-val.val-green {
+  color: var(--esg-emerald-light);
+}
+
+.esg-summary-metric-val.val-gold {
+  color: var(--esg-gold-light);
+}
+
+/* Audit Footnote */
+.esg-calc-audit-note {
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  padding-top: 16px;
+  margin-top: 18px;
+  text-align: left;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.esg-calc-audit-formula {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(197, 160, 89, 0.25);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--esg-gold-light);
+  margin-bottom: 6px;
+  word-break: break-all;
+}
+
+/* SROI Calculator Box */
+#esg-calculator,
+.esg-calc-box {
+  scroll-margin-top: 110px;
+}
+
+/* ==========================================================================
+   9. 5 Cross-Industry Brand Metaphors (五大產業五方格直觀導覽)
+   ========================================================================== */
+.esg-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.esg-tab-btn {
+  background: rgba(13, 25, 33, 0.88);
+  border: 1px solid var(--esg-border);
+  color: var(--esg-text-muted);
+  padding: 18px 12px;
+  border-radius: var(--esg-radius-md);
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--esg-transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.esg-tab-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.22) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.esg-tab-btn:hover::before,
+.esg-tab-btn.active::before {
+  opacity: 1;
+}
+
+.esg-tab-btn__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.esg-tab-btn__primary {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.esg-tab-btn__sub {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+.esg-tab-btn:hover {
+  border-color: rgba(197, 160, 89, 0.65);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 15px rgba(197, 160, 89, 0.2);
+}
+
+.esg-tab-btn.active {
+  background: linear-gradient(145deg, rgba(32, 27, 18, 0.96) 0%, rgba(13, 22, 29, 0.96) 100%);
+  border-color: var(--esg-gold);
+  box-shadow: 0 8px 30px rgba(197, 160, 89, 0.4), inset 0 0 16px rgba(197, 160, 89, 0.18);
+}
+
+.esg-tab-btn.active .esg-tab-btn__primary {
+  color: var(--esg-gold-light);
+  text-shadow: 0 0 12px rgba(197, 160, 89, 0.6);
+}
+
+.esg-tab-btn.active .esg-tab-btn__sub {
+  color: var(--esg-emerald-light);
+}
+
+.esg-tab-btn.active .morphicon-gold {
+  color: var(--esg-gold-light);
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.7));
+}
+
+/* ==========================================================================
+   Mobile Swipe Navigation Bar & Animations (手機版左右滑動切換控制條)
+   ========================================================================== */
+.esg-mobile-swipe-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11, 21, 28, 0.92);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: var(--esg-radius-md);
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.esg-swipe-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.15);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  color: var(--esg-gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--esg-transition);
+  flex-shrink: 0;
+}
+
+.esg-swipe-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.esg-swipe-btn:hover,
+.esg-swipe-btn:active {
+  background: var(--esg-gold);
+  color: #000000;
+  border-color: var(--esg-gold-light);
+  transform: scale(1.08);
+}
+
+.esg-swipe-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.esg-swipe-hint {
+  font-size: 0.86rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.esg-swipe-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.esg-swipe-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.esg-swipe-dot.active {
+  width: 24px;
+  border-radius: 9999px;
+  background: var(--esg-gold);
+  box-shadow: 0 0 12px var(--esg-gold);
+}
+
+.esg-swipe-counter {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--esg-gold-light);
+  font-family: 'Inter', monospace, sans-serif;
+}
+
+/* Slider Wrap & Touch Actions */
+.esg-industry-slider-wrap {
+  position: relative;
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.esg-tab-content {
+  display: none;
+  animation: fadeIn 0.4s ease;
+  touch-action: pan-y;
+}
+
+.esg-tab-content.active {
+  display: block;
+}
+
+@keyframes esgSlideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(45px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes esgSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-45px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.esg-tab-content.slide-next {
+  animation: esgSlideInRight 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.esg-tab-content.slide-prev {
+  animation: esgSlideInLeft 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.esg-industry-card {
+  background: var(--esg-bg-card);
+  border: 1px solid var(--esg-border);
+  border-radius: var(--esg-radius-lg);
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 36px;
+  align-items: center;
+}
+
+/* Industry Exhibition Concept Image Showcase */
+.esg-concept-img-card {
+  position: relative;
+  border-radius: var(--esg-radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(16, 185, 129, 0.12);
+  background: #000000;
+  transition: var(--esg-transition);
+}
+
+.esg-concept-img-card:hover {
+  border-color: var(--esg-gold);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.85), 0 0 35px rgba(197, 160, 89, 0.3);
+}
+
+.esg-concept-img-card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.esg-concept-img-card:hover img {
+  transform: scale(1.04);
+}
+
+.esg-concept-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  padding: 10px 14px;
+  background: rgba(7, 13, 18, 0.88);
+  backdrop-filter: blur(14px);
+  border-radius: 6px;
+  border-left: 3px solid var(--esg-gold);
+  font-size: 0.84rem;
+  color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.esg-concept-img-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.esg-industry-tag {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 4px;
+  background: rgba(197, 160, 89, 0.16);
+  color: var(--esg-gold-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.esg-industry-name {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 18px;
+  line-height: 1.35;
+}
+
+.esg-industry-spirit {
+  font-size: 1.3rem;
+  color: var(--esg-emerald-light);
+  font-weight: 600;
+  margin-bottom: 22px;
+  padding-left: 16px;
+  border-left: 3px solid var(--esg-emerald);
+}
+
+.esg-industry-story {
+  font-size: 1.22rem;
+  color: #cbd5e1;
+  line-height: 2.0;
+  margin-bottom: 28px;
+}
+
+.esg-themes-box {
+  background: rgba(7, 13, 18, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 22px 26px;
+}
+
+.esg-themes-box h5 {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  color: var(--esg-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.esg-themes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.esg-theme-chip {
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--esg-gold-light);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 1.08rem;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   10. Package & Add-on Modules
+   ========================================================================== */
+.esg-pricing-box {
+  background: radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.18) 0%, rgba(13, 25, 33, 0.96) 75%);
+  border: 1px solid var(--esg-gold);
+  border-radius: var(--esg-radius-lg);
+  padding: 56px 48px;
+  text-align: center;
+  margin-bottom: 52px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 50px rgba(197, 160, 89, 0.22);
+}
+
+.esg-pricing-tag {
+  color: var(--esg-emerald-light);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.esg-pricing-val {
+  font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 18px;
+  font-family: 'Playfair Display', serif;
+}
+
+.esg-pricing-val span {
+  font-size: 1.45rem;
+  color: var(--esg-gold-light);
+  font-weight: 400;
+}
+
+.esg-pricing-desc {
+  max-width: 760px;
+  margin: 0 auto 36px;
+  color: #cbd5e1;
+  font-size: 1.25rem;
+  line-height: 2.0;
+}
+
+.esg-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.esg-module-card {
+  background: rgba(7, 13, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--esg-radius-md);
+  padding: 28px 22px;
+  text-align: center;
+  transition: var(--esg-transition);
+  cursor: pointer;
+}
+
+.esg-module-card:hover {
+  border-color: var(--esg-gold);
+  transform: translateY(-4px);
+  background: rgba(18, 32, 42, 0.95);
+}
+
+.esg-module-card__icon {
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.esg-module-card__name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.esg-module-card__desc {
+  font-size: 1.08rem;
+  color: var(--esg-text-muted);
+  line-height: 1.75;
+}
+
+/* ==========================================================================
+   11. Contact CTA Section
+   ========================================================================== */
+.esg-contact-card {
+  background: linear-gradient(135deg, rgba(20, 36, 48, 0.95) 0%, rgba(9, 16, 22, 0.98) 100%);
+  border: 1px solid var(--esg-border);
+  border-radius: var(--esg-radius-lg);
+  padding: 64px 44px;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+}
+
+.esg-contact-card h2 {
+  font-size: clamp(2.2rem, 3.8vw, 3rem);
+  color: #ffffff;
+}
+
+.esg-contact-grid {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  margin-top: 44px;
+  flex-wrap: wrap;
+}
+
+.esg-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(7, 13, 18, 0.75);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  padding: 18px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: var(--esg-transition);
+}
+
+.esg-contact-item:hover {
+  border-color: var(--esg-gold);
+  background: rgba(197, 160, 89, 0.16);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(197, 160, 89, 0.3);
+}
+
+.esg-contact-item span {
+  color: var(--esg-gold-light);
+  font-size: 1.05rem;
+  display: block;
+}
+
+.esg-contact-item strong {
+  font-size: 1.3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .esg-hero__grid,
+  .esg-compare-grid,
+  .esg-calc-grid,
+  .esg-industry-card {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* 五大產業：平板/手機排成一目了然的五方格（2 x 2 + 1 滿版），無需滑動一眼看清 */
+  .esg-tabs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .esg-tab-btn:nth-child(5) {
+    grid-column: span 2;
+    flex-direction: row;
+    gap: 14px;
+    padding: 16px 20px;
+  }
+
+  .esg-tab-btn:nth-child(5) .esg-tab-btn__text {
+    flex-direction: row;
+    gap: 8px;
+    align-items: baseline;
+  }
+  
+  .esg-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .esg-modules-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 手機版排版優化：防止 esg-hud-tag 遮擋圖片，五方格手機高觸控優化 */
+@media (max-width: 768px) {
+  .esg-visual-card {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .esg-visual-card img {
+    border-radius: 12px;
+  }
+
+  .esg-hud-overlay {
+    display: none !important;
+  }
+
+  .esg-hud-tag {
+    position: static !important;
+    margin-top: 14px !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    padding: 14px 16px !important;
+    font-size: 0.88rem !important;
+    border-radius: 8px !important;
+    background: rgba(11, 21, 28, 0.95) !important;
+    border-left: 4px solid var(--esg-gold) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* 手機版五大方格：超清晰卡片化，隨點即切換 */
+  .esg-tabs {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .esg-tab-btn {
+    padding: 14px 10px !important;
+    min-height: 84px !important;
+    border-radius: 10px !important;
+    gap: 8px !important;
+  }
+
+  .esg-tab-btn__primary {
+    font-size: 1.05rem !important;
+  }
+
+  .esg-tab-btn__sub {
+    font-size: 0.78rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .esg-tab-btn:nth-child(5) {
+    grid-column: span 2 !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    min-height: 56px !important;
+    padding: 12px 16px !important;
+  }
+
+  .esg-tab-btn:nth-child(5) .esg-tab-btn__text {
+    flex-direction: row !important;
+    gap: 8px !important;
+    align-items: baseline !important;
+  }
+
+  .esg-industry-visual {
+    margin-top: 24px;
+  }
+
+  .esg-concept-img-card img {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 640px) {
+  .esg-container {
+    padding: 0 16px;
+  }
+  
+  .esg-hero__title {
+    font-size: 2.3rem;
+  }
+
+  .esg-hero__subtitle {
+    font-size: 1.2rem;
+  }
+
+  .esg-hero__desc {
+    font-size: 1.15rem;
+    line-height: 1.9;
+  }
+
+  .esg-hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .esg-hero__actions .esg-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .esg-brand-stage-box {
+    height: auto;
+    min-height: 420px;
+    padding-bottom: 14px;
+  }
+
+  .esg-brand-duo-wrap {
+    gap: 12px;
+  }
+
+  .esg-brand-medallion {
+    width: 108px;
+    height: 125px;
+  }
+
+  .esg-brand-logo-img {
+    width: 78px;
+    max-height: 95px;
+  }
+
+  .esg-esg-logo-svg-wrap {
+    width: 48px;
+    height: 48px;
+  }
+
+  .esg-esg-text-mark {
+    font-size: 0.98rem;
+  }
+
+  .esg-badge-label-main {
+    font-size: 0.84rem;
+  }
+
+  .esg-badge-label-sub {
+    font-size: 0.72rem;
+  }
+
+  .esg-brand-live-pill {
+    font-size: 0.68rem;
+    padding: 3px 8px;
+  }
+
+  .esg-stats-grid,
+  .esg-modules-grid,
+  .esg-sdg-matrix {
+    grid-template-columns: 1fr;
+  }
+  
+  .esg-calc-box {
+    padding: 24px 16px;
+  }
+
+  .esg-card {
+    padding: 28px 20px;
+  }
+
+  .esg-industry-card {
+    padding: 28px 20px;
+  }
+
+  .esg-pricing-box {
+    padding: 36px 20px;
+  }
+
+  .esg-contact-card {
+    padding: 36px 20px;
+  }
+}
+
+/* ==========================================================================
+   ESG Dedicated Header & Navigation Styling (電腦版與手機版全面適配)
+   ========================================================================== */
+sticky-header.header-wrapper {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 99999 !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.22) !important;
+  box-shadow: none !important;
+}
+
+header.header {
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+header.header .header__menu-item,
+header.header .header__active-menu-item,
+header.header .header__heading-link .h2,
+header.header .header__icon,
+header.header summary.header__icon,
+header.header summary.header__menu-item {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+header.header svg,
+header.header .icon,
+header.header .icon path,
+header.header .icon rect,
+header.header .icon line,
+header.header .icon-hamburger {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.cart-count-bubble {
+  background-color: #c5a059 !important;
+  color: #070d12 !important;
+}
+
+.menu-drawer,
+.menu-drawer__inner-container,
+.menu-drawer__navigation-container {
+  background: #0b151a !important;
+  color: #ffffff !important;
+}
+
+.menu-drawer .menu-drawer__menu-item {
+  color: #ffffff !important;
+}
+
+.menu-drawer .menu-drawer__menu-item:hover {
+  color: #c5a059 !important;
+  background: rgba(197, 160, 89, 0.12) !important;
+}
+
+.menu-drawer .icon-arrow,
+.menu-drawer .icon-caret,
+.menu-drawer .menu-drawer__close-button svg {
+  stroke: #ffffff !important;
+}
+
+.shopify-section-header-sticky sticky-header.header-wrapper {
+  background: #0b151a !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.35) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+  transition: background 0.3s ease;
+}
+
+/* ==========================================================================
+   5.5 AEO & GEO FAQ Accordion & Knowledge Base Styles
+   ========================================================================== */
+.esg-faq-section {
+  padding: 80px 0 100px;
+  position: relative;
+  z-index: 2;
+}
+
+.esg-faq-accordion-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.esg-faq-item {
+  background: rgba(11, 21, 28, 0.85);
+  border: 1px solid rgba(197, 160, 89, 0.24);
+  border-radius: var(--esg-radius-lg);
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.esg-faq-item:hover {
+  border-color: rgba(197, 160, 89, 0.55);
+  box-shadow: 0 8px 30px rgba(197, 160, 89, 0.12);
+}
+
+.esg-faq-item.is-open {
+  border-color: var(--esg-gold);
+  background: rgba(13, 26, 36, 0.95);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(197, 160, 89, 0.15);
+}
+
+.esg-faq-header {
+  width: 100%;
+  padding: 22px 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-align: left;
+  color: var(--esg-text-main);
+  transition: background 0.2s ease;
+}
+
+.esg-faq-header:hover {
+  background: rgba(197, 160, 89, 0.05);
+}
+
+.esg-faq-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(197, 160, 89, 0.15);
+  border: 1px solid var(--esg-gold);
+  color: var(--esg-gold-light);
+  font-family: var(--esg-serif, Georgia, serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.esg-faq-item.is-open .esg-faq-index {
+  background: linear-gradient(135deg, var(--esg-gold), var(--esg-gold-dark));
+  color: #04080c;
+  box-shadow: 0 0 14px var(--esg-gold-glow);
+}
+
+.esg-faq-title-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.esg-faq-title {
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.45;
+  transition: color 0.2s ease;
+}
+
+.esg-faq-item:hover .esg-faq-title {
+  color: var(--esg-gold-light);
+}
+
+.esg-faq-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.esg-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.esg-pill--emerald {
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  color: var(--esg-emerald-light);
+}
+
+.esg-pill--gold {
+  background: rgba(197, 160, 89, 0.18);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  color: var(--esg-gold-light);
+}
+
+.esg-faq-chevron {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--esg-gold);
+  flex-shrink: 0;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.esg-faq-chevron svg {
+  width: 22px;
+  height: 22px;
+}
+
+.esg-faq-item.is-open .esg-faq-chevron {
+  transform: rotate(180deg);
+  color: var(--esg-gold-light);
+}
+
+.esg-faq-body {
+  padding: 0 28px 28px;
+  border-top: 1px solid rgba(197, 160, 89, 0.14);
+}
+
+.esg-faq-direct-box {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(197, 160, 89, 0.08) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--esg-radius-md);
+  padding: 18px 22px;
+  margin: 20px 0 18px;
+  position: relative;
+}
+
+.esg-faq-direct-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--esg-emerald-light);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.esg-faq-direct-text {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #ffffff;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+
+.esg-faq-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  color: var(--esg-gold-light);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.esg-faq-copy-btn:hover {
+  background: var(--esg-gold);
+  color: #04080c;
+  box-shadow: 0 0 12px var(--esg-gold-glow);
+}
+
+.esg-faq-copy-btn.copied {
+  background: var(--esg-emerald);
+  color: #04080c;
+  border-color: var(--esg-emerald);
+}
+
+.esg-faq-details {
+  color: #cbd5e1;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.esg-faq-details h4 {
+  color: var(--esg-gold-light);
+  font-size: 1.05rem;
+  margin: 16px 0 10px;
+  font-weight: 600;
+}
+
+.esg-faq-details ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.esg-faq-details li {
+  line-height: 1.65;
+}
+
+.esg-faq-details strong {
+  color: #ffffff;
+}
+
+.esg-faq-sdgs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.esg-faq-sdg-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+}
+
+.esg-faq-sdg-card strong {
+  color: var(--esg-emerald-light);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.esg-faq-cta-bar {
+  margin-top: 48px;
+  background: linear-gradient(135deg, rgba(197, 160, 89, 0.15) 0%, rgba(16, 185, 129, 0.12) 100%);
+  border: 1px solid var(--esg-gold);
+  border-radius: var(--esg-radius-lg);
+  padding: 32px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.esg-faq-cta-info h4 {
+  font-size: 1.25rem;
+  color: #ffffff;
+  margin: 0 0 6px;
+  font-family: var(--esg-serif, Georgia, serif);
+}
+
+.esg-faq-cta-info p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 768px) {
+  .esg-faq-header {
+    padding: 18px 20px;
+    gap: 14px;
+  }
+  .esg-faq-index {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  .esg-faq-title {
+    font-size: 1.05rem;
+  }
+  .esg-faq-body {
+    padding: 0 20px 20px;
+  }
+  .esg-faq-cta-bar {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+  }
+  .esg-faq-sdgs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Enterprise Lobby Curation Showcase (方案 A：實境策展情境視窗與互動探索)
+   ========================================================================== */
+.esg-showcase-wrap {
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+  perspective: 1200px;
+}
+
+.esg-showcase-ambient-halo {
+  position: absolute;
+  inset: -15px -10px;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.22) 0%, rgba(197, 160, 89, 0.16) 45%, transparent 75%);
+  filter: blur(32px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+  animation: esgShowcaseBreathe 5s ease-in-out infinite alternate;
+}
+
+@keyframes esgShowcaseBreathe {
+  0% { opacity: 0.55; transform: scale(0.98); }
+  100% { opacity: 0.95; transform: scale(1.02); }
+}
+
+.esg-showcase-card {
+  position: relative;
+  z-index: 1;
+  border-radius: 14px;
+  background: linear-gradient(155deg, rgba(14, 25, 33, 0.96) 0%, rgba(7, 13, 18, 0.98) 100%);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.14), inset 0 0 30px rgba(197, 160, 89, 0.06);
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.esg-showcase-card:hover {
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.9), 0 0 45px rgba(197, 160, 89, 0.22), inset 0 0 35px rgba(16, 185, 129, 0.1);
+}
+
+/* 4 Cyber-Museum Corner Reticles */
+.esg-reticle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.reticle-tl {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid var(--esg-gold);
+  border-left: 2px solid var(--esg-gold);
+}
+
+.reticle-tr {
+  top: 10px;
+  right: 10px;
+  border-top: 2px solid var(--esg-gold);
+  border-right: 2px solid var(--esg-gold);
+}
+
+.reticle-bl {
+  bottom: 10px;
+  left: 10px;
+  border-bottom: 2px solid var(--esg-gold);
+  border-left: 2px solid var(--esg-gold);
+}
+
+.reticle-br {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid var(--esg-gold);
+  border-right: 2px solid var(--esg-gold);
+}
+
+/* Top HUD */
+.esg-showcase-hud-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: rgba(3, 7, 10, 0.75);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.esg-showcase-pill-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--esg-emerald-light);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.esg-radar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: esgRadarBlink 1.8s infinite ease-in-out;
+}
+
+@keyframes esgRadarBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.85); }
+}
+
+.esg-showcase-hud-center {
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.esg-showcase-pill-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.esg-gold-text {
+  color: var(--esg-gold-light);
+  font-weight: 700;
+}
+
+.esg-pill-divider {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Viewport Stage */
+.esg-showcase-viewport {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1200 / 397;
+  max-height: 520px;
+  background: #050a0e;
+}
+
+.esg-showcase-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.esg-showcase-card:hover .esg-showcase-img {
+  transform: scale(1.02);
+}
+
+.esg-showcase-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+  background-size: 100% 4px;
+  opacity: 0.45;
+  mix-blend-mode: overlay;
+}
+
+.esg-showcase-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 0%, rgba(197, 160, 89, 0.08) 45%, rgba(16, 185, 129, 0.12) 50%, transparent 60%);
+  background-size: 200% 200%;
+  animation: esgShimmerSweep 8s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes esgShimmerSweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Interactive Hotspots */
+.esg-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+}
+
+.esg-hotspot-pin {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+}
+
+.esg-pin-pulse {
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  border: 2px solid var(--esg-emerald-light);
+  box-shadow: 0 0 12px var(--esg-emerald-light);
+  animation: esgHotspotPulse 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.hotspot-dialogue .esg-pin-pulse {
+  border-color: var(--esg-gold-light);
+  box-shadow: 0 0 12px var(--esg-gold-light);
+}
+
+@keyframes esgHotspotPulse {
+  0% { transform: scale(0.7); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.esg-pin-core {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(7, 13, 18, 0.95);
+  border: 2px solid var(--esg-emerald-light);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.hotspot-dialogue .esg-pin-core {
+  border-color: var(--esg-gold-light);
+  box-shadow: 0 0 8px rgba(197, 160, 89, 0.8);
+}
+
+.esg-pin-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.esg-hotspot-pin:hover .esg-pin-core,
+.esg-hotspot:hover .esg-pin-core,
+.esg-hotspot.is-active .esg-pin-core {
+  transform: scale(1.35);
+  background: var(--esg-emerald-light);
+}
+
+.hotspot-dialogue .esg-hotspot-pin:hover .esg-pin-core,
+.hotspot-dialogue:hover .esg-pin-core,
+.hotspot-dialogue.is-active .esg-pin-core {
+  background: var(--esg-gold-light);
+}
+
+/* Tooltips */
+.esg-hotspot-tooltip {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: 260px;
+  background: rgba(7, 13, 18, 0.96);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+
+.esg-hotspot-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(7, 13, 18, 0.96) transparent transparent transparent;
+}
+
+.esg-hotspot:hover,
+.esg-hotspot.is-active,
+.esg-hotspot.active {
+  z-index: 30;
+}
+
+.esg-hotspot:hover .esg-hotspot-tooltip,
+.esg-hotspot.is-active .esg-hotspot-tooltip,
+.esg-hotspot.active .esg-hotspot-tooltip,
+.esg-hotspot:focus-within .esg-hotspot-tooltip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.esg-tooltip-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
+}
+
+.esg-tooltip-header strong {
+  font-size: 0.92rem;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+.esg-tooltip-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.18);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  letter-spacing: 0.04em;
+}
+
+.esg-badge--gold {
+  background: rgba(197, 160, 89, 0.18);
+  color: var(--esg-gold-light);
+  border-color: rgba(197, 160, 89, 0.35);
+}
+
+.esg-tooltip-desc {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Bottom HUD */
+.esg-showcase-hud-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: linear-gradient(180deg, rgba(6, 12, 16, 0.8) 0%, rgba(4, 8, 12, 0.98) 100%);
+  border-top: 1px solid rgba(197, 160, 89, 0.2);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.esg-showcase-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.esg-caption-star {
+  color: var(--esg-gold-light);
+  font-size: 1rem;
+}
+
+.esg-showcase-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--esg-gold-light);
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+}
+
+.esg-hint-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--esg-gold);
+  box-shadow: 0 0 8px var(--esg-gold);
+  animation: esgRadarBlink 2s infinite ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .esg-showcase-wrap {
+    margin-top: 28px;
+  }
+  .esg-showcase-hud-top {
+    padding: 10px 14px;
+    font-size: 0.78rem;
+  }
+  .esg-showcase-hud-center {
+    display: none;
+  }
+  .esg-showcase-viewport {
+    aspect-ratio: 16 / 9;
+  }
+  .esg-hotspot-tooltip {
+    width: 210px;
+    padding: 10px 12px;
+  }
+  .esg-showcase-hud-bottom {
+    padding: 12px 14px;
+  }
+  .esg-showcase-caption {
+    font-size: 0.85rem;
+  }
+  .esg-showcase-hint {
+    font-size: 0.75rem;
+  }
+}
+
+/* ==========================================================================
+   Subtle FAQ Styling (低調簡約、不搶眼的策展 Q&A 備忘風格)
+   ========================================================================== */
+.esg-faq-subtle .esg-faq-item {
+  background: rgba(11, 21, 28, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.esg-faq-subtle .esg-faq-item:hover {
+  border-color: rgba(197, 160, 89, 0.35);
+  background: rgba(16, 30, 40, 0.6);
+}
+
+.esg-faq-subtle .esg-faq-header {
+  padding: 16px 22px;
+  gap: 16px;
+}
+
+.esg-faq-subtle .esg-faq-index {
+  color: #64748b;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.esg-faq-subtle .esg-faq-title {
+  font-size: 1.05rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.esg-faq-subtle .esg-faq-direct-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-left: 3px solid rgba(197, 160, 89, 0.45);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+
+.esg-faq-subtle .esg-faq-direct-text {
+  font-size: 1.02rem;
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 400;
+}
+
+

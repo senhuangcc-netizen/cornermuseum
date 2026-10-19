@@ -1,0 +1,142 @@
+{%- style -%}
+  .parallax-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+  }
+  .parallax-item-{{ section.id }} {
+    position: relative;
+    width: {{ section.settings.container_width }}%;
+    margin: 50px auto;
+    overflow: hidden;
+    height: {{ section.settings.image_height }}vh;
+    border-radius: 8px; /* 加一點圓角，質感更好 */
+  }
+  /* 針對手機版的優化：高度自動縮小，避免佔滿整個螢幕 */
+  @media screen and (max-width: 768px) {
+    .parallax-item-{{ section.id }} {
+      width: 95%;
+      height: 50vh; 
+    }
+  }
+  .parallax-img-{{ section.id }} {
+    width: 100%;
+    /* 高度由 JS 動態決定，或預設 140% 以確保有移動空間 */
+    height: 140%; 
+    object-fit: cover;
+    position: absolute;
+    top: -20%; 
+    will-change: transform;
+  }
+  .parallax-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.2); /* 輕微的遮罩，讓文字更清楚 */
+    z-index: 1;
+  }
+  .parallax-text-container {
+    position: absolute; 
+    bottom: 30px; 
+    right: 30px; 
+    color: white; 
+    z-index: 2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+{%- endstyle -%}
+
+<section class="parallax-{{ section.id }}">
+  {%- for block in section.blocks -%}
+    <div class="parallax-item-{{ section.id }}" 
+         {{ block.shopify_attributes }}
+         data-intensity="{{ section.settings.parallax_intensity }}">
+         
+      <div class="parallax-overlay"></div>
+
+      {%- if block.settings.image != blank -%}
+        <img 
+            src="{{ block.settings.image | image_url: width: 1500 }}" 
+            class="parallax-img-{{ section.id }}" 
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+        >
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+      
+      <div class="parallax-text-container">
+        <h3 class="h2">{{ block.settings.title }}</h3>
+      </div>
+    </div>
+  {%- endfor -%}
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 檢查 GSAP 是否載入，避免報錯
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      
+      const items = document.querySelectorAll('.parallax-item-{{ section.id }}');
+
+      items.forEach(container => {
+        const img = container.querySelector('.parallax-img-{{ section.id }}');
+        const intensity = container.dataset.intensity || 20; // 讀取設定值
+        
+        // 根據強度調整圖片高度，避免移動時露出白底
+        // 強度越強，圖片需要越高
+        gsap.set(img, { height: (100 + parseFloat(intensity) * 2) + "%", top: (-parseFloat(intensity)) + "%" });
+
+        gsap.to(img, {
+          y: intensity + '%', // 使用設定的強度
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top bottom', // 當區塊頂部碰到視窗底部
+            end: 'bottom top',   // 當區塊底部碰到視窗頂部
+            scrub: true          // 跟隨捲動
+          }
+        });
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "視差攝影畫廊 (進階版)",
+  "settings": [
+    { "type": "header", "content": "佈局設定" },
+    { "type": "color", "id": "bg_color", "label": "背景顏色", "default": "#121212" },
+    { "type": "range", "id": "container_width", "label": "容器寬度 (%)", "min": 50, "max": 100, "step": 5, "default": 90 },
+    { "type": "range", "id": "image_height", "label": "圖片高度 (vh)", "min": 30, "max": 100, "step": 5, "default": 70 },
+    { "type": "range", "id": "padding_top", "label": "上方間距", "min": 0, "max": 100, "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "下方間距", "min": 0, "max": 100, "default": 60 },
+    { "type": "header", "content": "動畫設定" },
+    { 
+      "type": "range", 
+      "id": "parallax_intensity", 
+      "label": "視差移動強度", 
+      "info": "數值越大，圖片移動幅度越大 (建議 15-30)",
+      "min": 0, 
+      "max": 50, 
+      "step": 1, 
+      "default": 20 
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "攝影作品",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "選擇照片" },
+        { "type": "text", "id": "title", "label": "作品標題", "default": "Monochrome Lab" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "視差攝影畫廊 (進階版)"
+    }
+  ]
+}
+{% endschema %}
